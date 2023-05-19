@@ -7,11 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Domain.Interfaces.Base\Domain.Interfaces.Base.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+      <ProjectReference Include="..\BLL.Base\BLL.Base.csproj" />
+      <ProjectReference Include="..\BLL.Interfaces.App\BLL.Interfaces.App.csproj" />
+      <ProjectReference Include="..\DAL.Interfaces.App\DAL.Interfaces.App.csproj" />
     </ItemGroup>
 
 </Project>

@@ -8,8 +8,8 @@ namespace DAL.App;
 
 public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
-    public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
     public new DbSet<User> Users { get; set; } = default!;
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
     public DbSet<Competition> Competitions { get; set; } = default!;
     public DbSet<CompetitionStage> CompetitionStages { get; set; } = default!;
     public DbSet<CompetitionType> CompetitionTypes { get; set; } = default!;

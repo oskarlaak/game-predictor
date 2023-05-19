@@ -12,7 +12,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\DAL.Base\DAL.Base.csproj" />
+      <ProjectReference Include="..\DAL.Interfaces.App\DAL.Interfaces.App.csproj" />
       <ProjectReference Include="..\Domain.App\Domain.App.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Seeding\" />
     </ItemGroup>
 
 </Project>
