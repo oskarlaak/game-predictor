@@ -11,7 +11,7 @@ public interface IAppUOW : IBaseUOW
     ICompetitionStageRepo CompetitionStageRepo { get; }
     ICompetitionTypeRepo CompetitionTypeRepo { get; }
     ICompetitionUserRepo CompetitionUserRepo { get; }
-    IGameDayRepo GameDayRepo { get; }
+    IGameGroupRepo GameGroupRepo { get; }
     IGameRepo GameRepo { get; }
     IPredictionRepo PredictionRepo { get; }
     IScoringRulesRepo ScoringRulesRepo { get; }

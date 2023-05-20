@@ -17,7 +17,7 @@ public class AppUOW : BaseUOW<AppDbContext>, IAppUOW
     private ICompetitionStageRepo? _competitionStageRepo;
     private ICompetitionTypeRepo? _competitionTypeRepo;
     private ICompetitionUserRepo? _competitionUserRepo;
-    private IGameDayRepo? _gameDayRepo;
+    private IGameGroupRepo? _gameGroupRepo;
     private IGameRepo? _gameRepo;
     private IPredictionRepo? _predictionRepo;
     private IScoringRulesRepo? _scoringRulesRepo;
@@ -28,7 +28,7 @@ public class AppUOW : BaseUOW<AppDbContext>, IAppUOW
     public ICompetitionStageRepo CompetitionStageRepo => _competitionStageRepo ??= new CompetitionStageRepo(Ctx);
     public ICompetitionTypeRepo CompetitionTypeRepo => _competitionTypeRepo ??= new CompetitionTypeRepo(Ctx);
     public ICompetitionUserRepo CompetitionUserRepo => _competitionUserRepo ??= new CompetitionUserRepo(Ctx);
-    public IGameDayRepo GameDayRepo => _gameDayRepo ??= new GameDayRepo(Ctx);
+    public IGameGroupRepo GameGroupRepo => _gameGroupRepo ??= new GameGroupRepo(Ctx);
     public IGameRepo GameRepo => _gameRepo ??= new GameRepo(Ctx);
     public IPredictionRepo PredictionRepo => _predictionRepo ??= new PredictionRepo(Ctx);
     public IScoringRulesRepo ScoringRulesRepo => _scoringRulesRepo ??= new ScoringRulesRepo(Ctx);

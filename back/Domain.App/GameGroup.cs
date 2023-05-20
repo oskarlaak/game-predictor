@@ -2,7 +2,7 @@ using Domain.Base;
 
 namespace Domain.App;
 
-public class GameDay : BaseDomainEntity
+public class GameGroup : BaseDomainEntity
 {
     public Guid CompetitionStageId { get; set; }
     public CompetitionStage? CompetitionStage { get; set; }

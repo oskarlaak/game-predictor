@@ -14,5 +14,5 @@ public class CompetitionStage : BaseDomainEntity
 
     public DateTime CreatedDT { get; set; }
 
-    public ICollection<GameDay>? GameDays { get; set; }
+    public ICollection<GameGroup>? GameGroups { get; set; }
 }

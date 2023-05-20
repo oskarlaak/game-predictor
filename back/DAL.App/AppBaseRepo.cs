@@ -3,10 +3,10 @@ using Domain.Interfaces.Base;
 
 namespace DAL.App;
 
-public class AppBaseRepo<TEntity> : BaseRepo<TEntity, AppDbContext>
+public abstract class AppBaseRepo<TEntity> : BaseRepo<TEntity, AppDbContext>
     where TEntity : class, IBaseDomainEntity
 {
-    public AppBaseRepo(AppDbContext ctx) : base(ctx)
+    protected AppBaseRepo(AppDbContext ctx) : base(ctx)
     {
     }
 }

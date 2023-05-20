@@ -16,7 +16,7 @@ public class AppBLL : BaseBLL<IAppUOW>, IAppBLL
     private ICompetitionService? _competitionService;
     private ICompetitionStageService? _competitionStageService;
     private ICompetitionTypeService? _competitionTypeService;
-    private IGameDayService? _gameDayService;
+    private IGameGroupService? _gameGroupService;
     private IGameService? _gameService;
     private IPredictionService? _predictionService;
     private IScoringRulesService? _scoringRulesService;
@@ -25,7 +25,7 @@ public class AppBLL : BaseBLL<IAppUOW>, IAppBLL
     public ICompetitionService CompetitionService => _competitionService ??= new CompetitionService(Uow);
     public ICompetitionStageService CompetitionStageService => _competitionStageService ??= new CompetitionStageService(Uow);
     public ICompetitionTypeService CompetitionTypeService => _competitionTypeService ??= new CompetitionTypeService(Uow);
-    public IGameDayService GameDayService => _gameDayService ??= new GameDayService(Uow);
+    public IGameGroupService GameGroupService => _gameGroupService ??= new GameGroupService(Uow);
     public IGameService GameService => _gameService ??= new GameService(Uow);
     public IPredictionService PredictionService => _predictionService ??= new PredictionService(Uow);
     public IScoringRulesService ScoringRulesService => _scoringRulesService ??= new ScoringRulesService(Uow);

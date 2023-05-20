@@ -4,8 +4,8 @@ namespace Domain.App;
 
 public class Game : BaseDomainEntity
 {
-    public Guid GameDayId { get; set; }
-    public GameDay? GameDay { get; set; }
+    public Guid GameGroupId { get; set; }
+    public GameGroup? GameGroup { get; set; }
 
     public string TeamOneName { get; set; } = default!;
 

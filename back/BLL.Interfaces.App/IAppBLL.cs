@@ -9,7 +9,7 @@ public interface IAppBLL : IBaseBLL
     ICompetitionService CompetitionService { get; }
     ICompetitionStageService CompetitionStageService { get; }
     ICompetitionTypeService CompetitionTypeService { get; }
-    IGameDayService GameDayService { get; }
+    IGameGroupService GameGroupService { get; }
     IGameService GameService { get; }
     IPredictionService PredictionService { get; }
     IScoringRulesService ScoringRulesService { get; }

@@ -3,7 +3,7 @@ using Domain.App;
 
 namespace DAL.Interfaces.App.Repos;
 
-public interface IGameDayRepo : IBaseRepo<GameDay>
+public interface IGameGroupRepo : IBaseRepo<GameGroup>
 {
     
 }
