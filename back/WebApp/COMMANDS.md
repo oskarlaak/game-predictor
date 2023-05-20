@@ -7,11 +7,8 @@ dotnet tool update --global dotnet-aspnet-codegenerator
 # migrations
 ~~~bash
 dotnet ef database drop          -c AppDbContext -p DAL.App -s WebApp
-
 # delete Migrations folder
-
 dotnet ef migrations add Initial -c AppDbContext -p DAL.App -s WebApp
-
 dotnet ef database update        -c AppDbContext -p DAL.App -s WebApp
 ~~~
 

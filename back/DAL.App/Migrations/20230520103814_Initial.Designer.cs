@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230519170507_Initial")]
+    [Migration("20230520103814_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -127,7 +127,7 @@ namespace DAL.App.Migrations
                     b.Property<DateTime>("CreatedDT")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("GameDayId")
+                    b.Property<Guid>("GameGroupId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("PredictionDeadlineDT")
@@ -149,12 +149,12 @@ namespace DAL.App.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GameDayId");
+                    b.HasIndex("GameGroupId");
 
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("Domain.App.GameDay", b =>
+            modelBuilder.Entity("Domain.App.GameGroup", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,7 +174,7 @@ namespace DAL.App.Migrations
 
                     b.HasIndex("CompetitionStageId");
 
-                    b.ToTable("GameDays");
+                    b.ToTable("GameGroups");
                 });
 
             modelBuilder.Entity("Domain.App.Identity.RefreshToken", b =>
@@ -506,19 +506,19 @@ namespace DAL.App.Migrations
 
             modelBuilder.Entity("Domain.App.Game", b =>
                 {
-                    b.HasOne("Domain.App.GameDay", "GameDay")
+                    b.HasOne("Domain.App.GameGroup", "GameGroup")
                         .WithMany("Games")
-                        .HasForeignKey("GameDayId")
+                        .HasForeignKey("GameGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GameDay");
+                    b.Navigation("GameGroup");
                 });
 
-            modelBuilder.Entity("Domain.App.GameDay", b =>
+            modelBuilder.Entity("Domain.App.GameGroup", b =>
                 {
                     b.HasOne("Domain.App.CompetitionStage", "CompetitionStage")
-                        .WithMany("GameDays")
+                        .WithMany("GameGroups")
                         .HasForeignKey("CompetitionStageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -616,7 +616,7 @@ namespace DAL.App.Migrations
 
             modelBuilder.Entity("Domain.App.CompetitionStage", b =>
                 {
-                    b.Navigation("GameDays");
+                    b.Navigation("GameGroups");
                 });
 
             modelBuilder.Entity("Domain.App.CompetitionType", b =>
@@ -634,7 +634,7 @@ namespace DAL.App.Migrations
                     b.Navigation("Predictions");
                 });
 
-            modelBuilder.Entity("Domain.App.GameDay", b =>
+            modelBuilder.Entity("Domain.App.GameGroup", b =>
                 {
                     b.Navigation("Games");
                 });

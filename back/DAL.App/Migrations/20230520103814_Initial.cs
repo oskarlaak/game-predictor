@@ -282,7 +282,7 @@ namespace DAL.App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GameDays",
+                name: "GameGroups",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -292,9 +292,9 @@ namespace DAL.App.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GameDays", x => x.Id);
+                    table.PrimaryKey("PK_GameGroups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GameDays_CompetitionStages_CompetitionStageId",
+                        name: "FK_GameGroups_CompetitionStages_CompetitionStageId",
                         column: x => x.CompetitionStageId,
                         principalTable: "CompetitionStages",
                         principalColumn: "Id",
@@ -306,7 +306,7 @@ namespace DAL.App.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    GameDayId = table.Column<Guid>(type: "uuid", nullable: false),
+                    GameGroupId = table.Column<Guid>(type: "uuid", nullable: false),
                     TeamOneName = table.Column<string>(type: "text", nullable: false),
                     TeamTwoName = table.Column<string>(type: "text", nullable: false),
                     TeamOneScore = table.Column<int>(type: "integer", nullable: true),
@@ -318,9 +318,9 @@ namespace DAL.App.Migrations
                 {
                     table.PrimaryKey("PK_Games", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Games_GameDays_GameDayId",
-                        column: x => x.GameDayId,
-                        principalTable: "GameDays",
+                        name: "FK_Games_GameGroups_GameGroupId",
+                        column: x => x.GameGroupId,
+                        principalTable: "GameGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -415,14 +415,14 @@ namespace DAL.App.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GameDays_CompetitionStageId",
-                table: "GameDays",
+                name: "IX_GameGroups_CompetitionStageId",
+                table: "GameGroups",
                 column: "CompetitionStageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Games_GameDayId",
+                name: "IX_Games_GameGroupId",
                 table: "Games",
-                column: "GameDayId");
+                column: "GameGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Predictions_CompetitionUserId",
@@ -477,7 +477,7 @@ namespace DAL.App.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "GameDays");
+                name: "GameGroups");
 
             migrationBuilder.DropTable(
                 name: "CompetitionStages");

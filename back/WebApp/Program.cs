@@ -1,5 +1,9 @@
 using System.Text;
+using BLL.App;
+using BLL.Interfaces.App;
 using DAL.App;
+using DAL.App.Seeding;
+using DAL.Interfaces.App;
 using Domain.App.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApp;
+
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +24,8 @@ string connectionString =
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
-// builder.Services.AddScoped<IAppUOW, AppUOW>();
-// builder.Services.AddScoped<IAppBLL, AppBLL>();
+builder.Services.AddScoped<IAppUOW, AppUOW>();
+builder.Services.AddScoped<IAppBLL, AppBLL>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -56,10 +61,10 @@ builder.Services.AddCors(options => options.AddPolicy("CorsAllowAny", policy =>
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerOptions>();
 builder.Services.AddSwaggerGen();
 
-// SetupAppData(app, app.Configuration, app.Environment);
-
 
 WebApplication app = builder.Build();
+
+SetupAppData(app, app.Configuration, app.Environment);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -92,3 +97,60 @@ app.MapControllerRoute(
 );
 
 app.Run();
+
+
+static void SetupAppData(IApplicationBuilder app, IConfiguration config, IWebHostEnvironment env)
+{
+    using IServiceScope serviceScope = app.ApplicationServices
+        .GetRequiredService<IServiceScopeFactory>()
+        .CreateScope();
+    
+    using AppDbContext? ctx = serviceScope.ServiceProvider.GetService<AppDbContext>();
+    if (ctx == null)
+    {
+        throw new ApplicationException("Problem in services. Can't initialize AppDbContext");
+    }
+
+    using UserManager<User>? userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
+    if (userManager == null)
+    {
+        throw new ApplicationException("Problem in services. Can't initialize UserManager");
+    }
+    
+    ILogger? logger = serviceScope.ServiceProvider.GetService<ILogger<IApplicationBuilder>>();
+    if (logger == null)
+    {
+        throw new ApplicationException("Problem in services. Can't initialize Logger");
+    }
+
+    if (ctx.Database.ProviderName!.Contains("InMemory"))
+    {
+        return;
+    }
+
+    // TODO: wait for db connection
+
+    if (config.GetValue<bool>("DataInit:DropDatabase"))
+    {
+        logger.LogWarning("Dropping database");
+        DataSeeder.DropDatabase(ctx);
+    }
+
+    if (config.GetValue<bool>("DataInit:MigrateDatabase"))
+    {
+        logger.LogInformation("Migrating database");
+        DataSeeder.MigrateDatabase(ctx);
+    }
+
+    if (config.GetValue<bool>("DataInit:SeedAppData"))
+    {
+        logger.LogInformation("Seeding app data");
+        DataSeeder.SeedAppData(ctx);
+    }
+
+    if (config.GetValue<bool>("DataInit:SeedTestData"))
+    {
+        logger.LogInformation("Seeding test data");
+        DataSeeder.SeedTestData(ctx, userManager);
+    }
+}
