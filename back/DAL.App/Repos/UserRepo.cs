@@ -1,5 +1,5 @@
 using DAL.Interfaces.App.Repos;
-using Domain.App.Identity;
+using Domain.App;
 
 namespace DAL.App.Repos;
 

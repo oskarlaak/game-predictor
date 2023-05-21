@@ -1,5 +1,4 @@
 ﻿using Domain.App;
-using Domain.App.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,6 @@ namespace DAL.App;
 public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
     public new DbSet<User> Users { get; set; } = default!;
-    public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
     public DbSet<Competition> Competitions { get; set; } = default!;
     public DbSet<CompetitionStage> CompetitionStages { get; set; } = default!;
     public DbSet<CompetitionType> CompetitionTypes { get; set; } = default!;

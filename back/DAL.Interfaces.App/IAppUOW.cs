@@ -6,7 +6,6 @@ namespace DAL.Interfaces.App;
 public interface IAppUOW : IBaseUOW
 {
     IUserRepo UserRepo { get; }
-    IRefreshTokenRepo RefreshTokenRepo { get; }
     ICompetitionRepo CompetitionRepo { get; }
     ICompetitionStageRepo CompetitionStageRepo { get; }
     ICompetitionTypeRepo CompetitionTypeRepo { get; }

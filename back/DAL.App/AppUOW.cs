@@ -11,7 +11,6 @@ public class AppUOW : BaseUOW<AppDbContext>, IAppUOW
     {
     }
 
-    private IRefreshTokenRepo? _refreshTokenRepo;
     private IUserRepo? _userRepo;
     private ICompetitionRepo? _competitionRepo;
     private ICompetitionStageRepo? _competitionStageRepo;
@@ -22,7 +21,6 @@ public class AppUOW : BaseUOW<AppDbContext>, IAppUOW
     private IPredictionRepo? _predictionRepo;
     private IScoringRulesRepo? _scoringRulesRepo;
     
-    public IRefreshTokenRepo RefreshTokenRepo => _refreshTokenRepo ??= new RefreshTokenRepo(Ctx);
     public IUserRepo UserRepo => _userRepo ??= new UserRepo(Ctx);
     public ICompetitionRepo CompetitionRepo => _competitionRepo ??= new CompetitionRepo(Ctx);
     public ICompetitionStageRepo CompetitionStageRepo => _competitionStageRepo ??= new CompetitionStageRepo(Ctx);

@@ -10,6 +10,7 @@
       <ProjectReference Include="..\BLL.Base\BLL.Base.csproj" />
       <ProjectReference Include="..\BLL.Interfaces.App\BLL.Interfaces.App.csproj" />
       <ProjectReference Include="..\DAL.Interfaces.App\DAL.Interfaces.App.csproj" />
+      <ProjectReference Include="..\Helpers.Base\Helpers.Base.csproj" />
     </ItemGroup>
 
 </Project>

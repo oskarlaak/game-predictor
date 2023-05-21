@@ -1,5 +1,4 @@
 using Domain.App;
-using Domain.App.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
