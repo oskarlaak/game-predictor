@@ -52,7 +52,9 @@ public class DataSeeder
         User appUser = new()
         {
             UserName = username,
-            Email = email
+            Email = email,
+            RefreshToken = Guid.NewGuid().ToString(),
+            RefreshTokenExpirationDT = DateTime.UtcNow.AddDays(7)
         };
 
         IdentityResult result = userManager.CreateAsync(appUser, password).Result;

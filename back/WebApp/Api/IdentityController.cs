@@ -2,6 +2,8 @@ using BLL.DTO.Identity;
 using BLL.Interfaces.App;
 using Domain.App;
 using Helpers.Base;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Public.DTO;
@@ -75,6 +77,7 @@ public class IdentityController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<SuccessDTO>> Logout()
     {
         try
