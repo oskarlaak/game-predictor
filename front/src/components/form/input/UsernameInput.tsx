@@ -5,12 +5,12 @@ type Props<T> = {
     setDto: Dispatch<SetStateAction<T>>;
 };
 
-export default function PasswordInputLogin<T>({setDto}: Props<T>) {
+export default function UsernameInput<T>({setDto}: Props<T>) {
     return <Input
-        type="password"
-        name="password"
-        placeholder="Password"
-        autoComplete="current-password"
+        type="text"
+        name="username"
+        placeholder="Username"
+        autoComplete="username"
         setDto={setDto}
     />;
 }

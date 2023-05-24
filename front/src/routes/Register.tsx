@@ -6,9 +6,9 @@ import IJwtDTO from "../dto/identity/IJwtDTO";
 import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
 import IRegisterDTO from "../dto/identity/IRegisterDTO";
-import TextInput from "../components/form/input/TextInput";
 import PasswordInputRegister from "../components/form/input/PasswordInputRegister";
 import PasswordConfirmInputRegister from "../components/form/input/PasswordConfirmInputRegister";
+import UsernameInput from "../components/form/input/UsernameInput";
 
 export default function Register() {
     const {jwt, setJwt} = useContext(JwtContext);
@@ -32,8 +32,7 @@ export default function Register() {
     return <>
         <h1>Register</h1>
         <form>
-            <TextInput
-                title="Username"
+            <UsernameInput
                 setDto={setDto}
             />
             <EmailInput

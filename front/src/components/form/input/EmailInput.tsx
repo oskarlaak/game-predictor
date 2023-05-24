@@ -1,23 +1,16 @@
 import { Dispatch, SetStateAction } from "react";
+import Input from "./Input";
 
 type Props<T> = {
-    setDto: Dispatch<SetStateAction<T>>
-}
+    setDto: Dispatch<SetStateAction<T>>;
+};
 
 export default function EmailInput<T>({setDto}: Props<T>) {
-
-    function updateDto(e: HTMLInputElement) {
-        setDto(previous => ({
-            ...previous,
-            [e.name]: e.value
-        }));
-    };
-
-    return <input
-        onChange={e => updateDto(e.target)}
-        placeholder="Email"
-        autoComplete="email"
+    return <Input
         type="email"
         name="email"
-    />
+        placeholder="Email"
+        autoComplete="email"
+        setDto={setDto}
+    />;
 }
