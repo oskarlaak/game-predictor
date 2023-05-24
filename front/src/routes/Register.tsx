@@ -45,7 +45,7 @@ export default function Register() {
             <PasswordConfirmInputRegister
                 setDto={setDto}
             />
-            <Button
+            <Button<IJwtDTO>
                 title="Register"
                 onClickRequest={() => identityService.register(dto)}
                 onSuccess={onSuccess}
