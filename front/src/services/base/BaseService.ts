@@ -2,10 +2,13 @@ import Axios, { AxiosInstance, AxiosResponse, isAxiosError } from "axios";
 
 export default abstract class BaseService {
     protected readonly axios: AxiosInstance;
+    protected readonly baseUrl: string;
 
     constructor(url: string) {
+        this.baseUrl = "https://localhost:7134/api/";
+
         this.axios = Axios.create({
-            baseURL: "https://localhost:7134/api/" + url,
+            baseURL: this.baseUrl + url,
             headers: {
                 common: {
                     "Content-Type": "application/json"

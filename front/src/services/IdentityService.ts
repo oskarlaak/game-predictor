@@ -6,7 +6,7 @@ import IRegisterDTO from "../dto/identity/IRegisterDTO";
 import BaseAuthoredService from "./base/BaseAuthoredService";
 
 export default class IdentityService extends BaseAuthoredService {
-    constructor(setJwt: (data: IJwtDTO | null) => void) {
+    constructor(setJwt: (jwt: IJwtDTO | null) => void) {
         super('identity/', setJwt);
     }
 
@@ -20,9 +20,5 @@ export default class IdentityService extends BaseAuthoredService {
 
     async logout(jwt: IJwtDTO): Promise<ISuccessDTO | IErrorDTO | undefined> {
         return await this.authoredPost<ISuccessDTO | IErrorDTO>(jwt, "logout", jwt);
-    }
-
-    async refreshJwt(jwt: IJwtDTO): Promise<IJwtDTO | IErrorDTO | undefined> {
-        return await this.unauthoredPost<IJwtDTO | IErrorDTO>("refreshjwt", jwt);
     }
 }

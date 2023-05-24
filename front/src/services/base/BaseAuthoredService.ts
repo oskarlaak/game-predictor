@@ -4,7 +4,6 @@ import IErrorDTO from "../../dto/IErrorDTO";
 import ISuccessDTO from "../../dto/ISuccessDTO";
 import IJwtDTO from "../../dto/identity/IJwtDTO";
 import BaseService from "./BaseService";
-import IdentityService from "../IdentityService";
 
 export default abstract class BaseAuthoredService extends BaseService {
 
@@ -30,6 +29,10 @@ export default abstract class BaseAuthoredService extends BaseService {
         return await this.authoredDelete<ISuccessDTO | IErrorDTO>(jwt, "delete/" + id);
     }
 
+    private async refreshJwt(jwt: IJwtDTO): Promise<IJwtDTO | IErrorDTO | undefined> {
+        return await this.unauthoredPost<IJwtDTO | IErrorDTO>(this.baseUrl + "identity/refreshjwt", jwt);
+    }
+
     protected async authoredGet<T>(
         jwt: IJwtDTO,
         url: string,
@@ -50,9 +53,8 @@ export default abstract class BaseAuthoredService extends BaseService {
             if (isAxiosError(e) && e.response) {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
-                        let identityService = new IdentityService(this.setJwt);
 
-                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await identityService.refreshJwt(jwt);
+                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
                             this.setJwt(refreshResponse);
@@ -91,9 +93,8 @@ export default abstract class BaseAuthoredService extends BaseService {
             if (isAxiosError(e) && e.response) {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
-                        let identityService = new IdentityService(this.setJwt);
 
-                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await identityService.refreshJwt(jwt);
+                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
                             this.setJwt(refreshResponse);
@@ -132,9 +133,8 @@ export default abstract class BaseAuthoredService extends BaseService {
             if (isAxiosError(e) && e.response) {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
-                        let identityService = new IdentityService(this.setJwt);
 
-                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await identityService.refreshJwt(jwt);
+                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
                             this.setJwt(refreshResponse);
@@ -171,9 +171,8 @@ export default abstract class BaseAuthoredService extends BaseService {
             if (isAxiosError(e) && e.response) {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
-                        let identityService = new IdentityService(this.setJwt);
 
-                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await identityService.refreshJwt(jwt);
+                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
                             this.setJwt(refreshResponse);

@@ -11,6 +11,7 @@ import PasswordConfirmInputRegister from "../components/form/input/PasswordConfi
 import UsernameInput from "../components/form/input/UsernameInput";
 
 export default function Register() {
+    
     const {jwt, setJwt} = useContext(JwtContext);
 
     const navigate = useNavigate();
@@ -50,5 +51,5 @@ export default function Register() {
                 onSuccess={onSuccess}
             />
         </form>
-    </>
+    </>;
 }

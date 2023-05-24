@@ -9,6 +9,7 @@ import Button from "../components/form/Button";
 import PasswordInputLogin from "../components/form/input/PasswordInputLogin";
 
 export default function Login() {
+
     const {jwt, setJwt} = useContext(JwtContext);
 
     const navigate = useNavigate();
@@ -40,5 +41,5 @@ export default function Login() {
                 onSuccess={onSuccess}
             />
         </form>
-    </>
+    </>;
 }
