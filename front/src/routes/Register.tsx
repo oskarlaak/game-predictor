@@ -3,7 +3,6 @@ import { useState, useContext } from "react";
 import { JwtContext } from "../App";
 import IdentityService from "../services/IdentityService";
 import IJwtDTO from "../dto/identity/IJwtDTO";
-import IErrorDTO from "../dto/IErrorDTO";
 import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
 import IRegisterDTO from "../dto/identity/IRegisterDTO";
@@ -16,8 +15,6 @@ export default function Register() {
 
     const navigate = useNavigate();
 
-    const [error, setError] = useState<string>("");
-
     const [dto, setDto] = useState<IRegisterDTO>({
         username: "",
         email: "",
@@ -27,17 +24,9 @@ export default function Register() {
 
     const identityService = new IdentityService(setJwt);
 
-    async function register() {
-        let response: IJwtDTO | IErrorDTO | undefined = await identityService.register(dto);
-
-        if (response === undefined) {
-            setError("Axios problem");
-        } else if ("errorMessage" in response) {
-            setError(response.errorMessage);
-        } else {
-            setJwt(response);
-            navigate("/");
-        }
+    function onSuccess(response: IJwtDTO) {
+        setJwt(response);
+        navigate("/");
     }
 
     return <>
@@ -58,9 +47,9 @@ export default function Register() {
             />
             <Button
                 title="Register"
-                onClick={register}
+                onClickRequest={() => identityService.register(dto)}
+                onSuccess={onSuccess}
             />
-            {error}
         </form>
     </>
 }

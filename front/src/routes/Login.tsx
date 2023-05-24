@@ -4,7 +4,6 @@ import { JwtContext } from "../App";
 import IdentityService from "../services/IdentityService";
 import ILoginDTO from "../dto/identity/ILoginDTO";
 import IJwtDTO from "../dto/identity/IJwtDTO";
-import IErrorDTO from "../dto/IErrorDTO";
 import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
 import PasswordInputLogin from "../components/form/input/PasswordInputLogin";
@@ -15,8 +14,6 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-    const [error, setError] = useState<string>("");
-
     const [dto, setDto] = useState<ILoginDTO>({
         email: "",
         password: ""
@@ -24,17 +21,9 @@ export default function Login() {
 
     const identityService = new IdentityService(setJwt);
 
-    async function login() {
-        let response: IJwtDTO | IErrorDTO | undefined = await identityService.login(dto);
-
-        if (response === undefined) {
-            setError("Axios problem");
-        } else if ("errorMessage" in response) {
-            setError(response.errorMessage);
-        } else {
-            setJwt(response);
-            navigate("/");
-        }
+    function onSuccess(response: IJwtDTO) {
+        setJwt(response);
+        navigate("/");
     }
 
     return <>
@@ -46,11 +35,11 @@ export default function Login() {
             <PasswordInputLogin
                 setDto={setDto}
             />
-            <Button
+            <Button<IJwtDTO>
                 title="Login"
-                onClick={login}
+                onClickRequest={() => identityService.login(dto)}
+                onSuccess={onSuccess}
             />
-            {error}
         </form>
     </>
 }
