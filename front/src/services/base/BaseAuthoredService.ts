@@ -9,7 +9,7 @@ export default abstract class BaseAuthoredService extends BaseService {
 
     private readonly setJwt: (jwt: IJwtDTO | null) => void;
 
-    constructor(
+    protected constructor(
         url: string,
         setJwt: (jwt: IJwtDTO | null) => void
     ) {
@@ -21,8 +21,8 @@ export default abstract class BaseAuthoredService extends BaseService {
         return await this.authoredPost<ICreatedDTO | IErrorDTO>(jwt, "post", postDto);
     }
 
-    protected async defaultAuthoredPut(jwt: IJwtDTO, id: string, putDto: any): Promise<ISuccessDTO | IErrorDTO | undefined> {
-        return await this.authoredPut<ISuccessDTO | IErrorDTO>(jwt, "put/" + id, putDto);
+    protected async defaultAuthoredPatch(jwt: IJwtDTO, id: string, putDto: any): Promise<ISuccessDTO | IErrorDTO | undefined> {
+        return await this.authoredPatch<ISuccessDTO | IErrorDTO>(jwt, "patch/" + id, putDto);
     }
 
     protected async defaultAuthoredDelete(jwt: IJwtDTO, id: string): Promise<ISuccessDTO | IErrorDTO | undefined> {
@@ -36,7 +36,7 @@ export default abstract class BaseAuthoredService extends BaseService {
     protected async authoredGet<T>(
         jwt: IJwtDTO,
         url: string,
-        refreshJwtWhenUnauthorized: boolean = true
+        refreshJwtWhenUnauthorized = true
     ): Promise<T | undefined> {
 
         let response: AxiosResponse<T>;
@@ -45,7 +45,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 url,
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + jwt.token
+                        "Authorization": "Bearer " + jwt.token
                     }
                 }
             );
@@ -54,7 +54,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
 
-                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
+                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
                             this.setJwt(refreshResponse);
@@ -62,7 +62,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                             return await this.authoredGet<T>(refreshResponse, url, false);
                         }
                     }
-                    return undefined
+                    return undefined;
                 } 
                 return e.response.data;
             }
@@ -75,7 +75,7 @@ export default abstract class BaseAuthoredService extends BaseService {
         jwt: IJwtDTO,
         url: string,
         data?: any,
-        refreshJwtWhenUnauthorized: boolean = true
+        refreshJwtWhenUnauthorized = true
     ): Promise<T | undefined> {
     
         let response: AxiosResponse<T>;
@@ -85,7 +85,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 data,
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + jwt.token
+                        "Authorization": "Bearer " + jwt.token
                     }
                 }
             );
@@ -94,7 +94,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
 
-                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
+                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
                             this.setJwt(refreshResponse);
@@ -102,7 +102,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                             return await this.authoredPost<T>(refreshResponse, url, data, false);
                         }
                     }
-                    return undefined
+                    return undefined;
                 } 
                 return e.response.data;
             }
@@ -111,21 +111,21 @@ export default abstract class BaseAuthoredService extends BaseService {
         return response.data;
     }
 
-    protected async authoredPut<T>(
+    protected async authoredPatch<T>(
         jwt: IJwtDTO,
         url: string,
         data?: any,
-        refreshJwtWhenUnauthorized: boolean = true
+        refreshJwtWhenUnauthorized = true
     ): Promise<T | undefined> {
     
         let response: AxiosResponse<T>;
         try{
-            response = await this.axios.put<T>(
+            response = await this.axios.patch<T>(
                 url,
                 data,
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + jwt.token
+                        "Authorization": "Bearer " + jwt.token
                     }
                 }
             );
@@ -134,15 +134,15 @@ export default abstract class BaseAuthoredService extends BaseService {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
 
-                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
+                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
                             this.setJwt(refreshResponse);
 
-                            return await this.authoredPut<T>(refreshResponse, url, data, false);
+                            return await this.authoredPatch<T>(refreshResponse, url, data, false);
                         }
                     }
-                    return undefined
+                    return undefined;
                 } 
                 return e.response.data;
             }
@@ -154,7 +154,7 @@ export default abstract class BaseAuthoredService extends BaseService {
     protected async authoredDelete<T>(
         jwt: IJwtDTO,
         url: string,
-        refreshJwtWhenUnauthorized: boolean = true
+        refreshJwtWhenUnauthorized = true
     ): Promise<T | undefined> {
     
         let response: AxiosResponse<T>;
@@ -163,7 +163,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 url,
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + jwt.token
+                        "Authorization": "Bearer " + jwt.token
                     }
                 }
             );
@@ -172,7 +172,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
 
-                        let refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
+                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
                             this.setJwt(refreshResponse);
@@ -180,7 +180,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                             return await this.authoredDelete<T>(refreshResponse, url, false);
                         }
                     }
-                    return undefined
+                    return undefined;
                 } 
                 return e.response.data;
             }

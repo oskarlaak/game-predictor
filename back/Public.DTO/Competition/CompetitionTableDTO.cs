@@ -5,6 +5,6 @@ namespace Public.DTO.Competition;
 
 public class CompetitionTableDTO
 {
-    public IEnumerable<CompetitionStageDTO> CompetitionStages { get; set; } = default!;
     public IEnumerable<CompetitionUserDTO> CompetitionUsers { get; set; } = default!;
+    public IEnumerable<CompetitionStageDTO> CompetitionStages { get; set; } = default!;
 }

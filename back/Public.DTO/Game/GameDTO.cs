@@ -1,3 +1,5 @@
+using Public.DTO.Prediction;
+
 namespace Public.DTO.Game;
 
 public class GameDTO
@@ -7,5 +9,6 @@ public class GameDTO
     public string TeamTwoName { get; set; } = default!;
     public int? TeamOneScore { get; set; }
     public int? TeamTwoScore { get; set; }
-    public int SecondsLeftToPredict { get; set; }
+    public DateTime PredictionDeadlineDT { get; set; }
+    public IEnumerable<PredictionDTO> Predictions { get; set; } = default!;
 }

@@ -10,7 +10,7 @@ import PasswordInputRegister from "../components/form/input/PasswordInputRegiste
 import PasswordConfirmInputRegister from "../components/form/input/PasswordConfirmInputRegister";
 import UsernameInput from "../components/form/input/UsernameInput";
 
-export default function Register() {
+export default function Register(): JSX.Element {
     
     const {jwt, setJwt} = useContext(JwtContext);
 
@@ -25,7 +25,7 @@ export default function Register() {
 
     const identityService = new IdentityService(setJwt);
 
-    function onSuccess(response: IJwtDTO) {
+    function onSuccess(response: IJwtDTO): void {
         setJwt(response);
         navigate("/");
     }

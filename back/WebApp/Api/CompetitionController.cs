@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Public.DTO.Competition;
+using WebApp.Helpers;
 using WebApp.Mappers;
 
 namespace WebApp.Api;
@@ -26,10 +27,42 @@ public class CompetitionController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CompetitionDTO>>> GetAll()
     {
-        IEnumerable<CompetitionBLLDTO> competitionsBll = await _bll.CompetitionService.GetAll(User.GetId());
+        IEnumerable<CompetitionBLLDTO> competitions = await _bll.CompetitionService.GetAll(User.GetId());
         
-        IEnumerable<CompetitionDTO> competitions = competitionsBll.Select(c => _mapper.Map(c));
+        return Ok(competitions.Select(c => _mapper.Map(c)));
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<IEnumerable<CompetitionDTO>>> Get(Guid id)
+    {
+        CompetitionBLLDTO competition;
 
-        return Ok(competitions);
+        try
+        {
+            competition = await _bll.CompetitionService.GetById(id, User.GetId());
+        }
+        catch (ArgumentException e)
+        {
+            return ResponseHelpers.ErrorResponse(e.Message);
+        }
+
+        return Ok(_mapper.Map(competition));
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<CompetitionTableDTO>> GetTable(Guid id)
+    {
+        CompetitionTableBLLDTO competitionTable;
+        
+        try
+        {
+            competitionTable = await _bll.CompetitionService.GetByIdTable(id, User.GetId());
+        }
+        catch (ArgumentException e)
+        {
+            return ResponseHelpers.ErrorResponse(e.Message);
+        }
+
+        return Ok(_mapper.Map(competitionTable));
     }
 }

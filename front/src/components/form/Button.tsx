@@ -5,14 +5,14 @@ type Props<T extends object> = {
     title: string;
     onClickRequest: () => Promise<T | IErrorDTO | undefined>;
     onSuccess: (response: T) => void;
-}
+};
 
-export default function Button<T extends object>({title, onClickRequest, onSuccess}: Props<T>) {
+export default function Button<T extends object>({title, onClickRequest, onSuccess}: Props<T>): JSX.Element {
 
-    const [error, setError] = useState<string>("");
+    const [error, setError] = useState<string>();
 
-    async function onClick() {
-        let response: T | IErrorDTO | undefined = await onClickRequest();
+    async function onClick(): Promise<void> {
+        const response: T | IErrorDTO | undefined = await onClickRequest();
 
         if (response === undefined) {
             setError("Axios problem");
@@ -24,9 +24,9 @@ export default function Button<T extends object>({title, onClickRequest, onSucce
     }
 
     return <>
-        <button onClick={e => {e.preventDefault(); onClick()}}>
+        <button onClick={e => {e.preventDefault(); onClick();}}>
             {title}
         </button>
-        {error}
+        {error ?? ""}
     </>;
 }

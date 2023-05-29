@@ -4,7 +4,7 @@ export default abstract class BaseService {
     protected readonly axios: AxiosInstance;
     protected readonly baseUrl: string;
 
-    constructor(url: string) {
+    protected constructor(url: string) {
         this.baseUrl = "https://localhost:7134/api/";
 
         this.axios = Axios.create({

@@ -17,10 +17,32 @@ public class CompetitionService : AppBaseService, ICompetitionService
 
     public async Task<IEnumerable<CompetitionBLLDTO>> GetAll(Guid userId)
     {
-        IEnumerable<CompetitionDALDTO> competitionsDal = await Uow.CompetitionRepo.GetAll(userId);
+        IEnumerable<CompetitionDALDTO> competitions = await Uow.CompetitionRepo.GetAll(userId);
 
-        IEnumerable<CompetitionBLLDTO> competitions = competitionsDal.Select(c => _mapper.Map(c));
+        return competitions.Select(c => _mapper.Map(c));
+    }
 
-        return competitions;
+    public async Task<CompetitionBLLDTO> GetById(Guid id, Guid userId)
+    {
+        CompetitionDALDTO? competition = await Uow.CompetitionRepo.GetById(id, userId);
+
+        if (competition == null)
+        {
+            throw new ArgumentException("Competition doesn't exist or you're not in it");
+        }
+
+        return _mapper.Map(competition);
+    }
+
+    public async Task<CompetitionTableBLLDTO> GetByIdTable(Guid id, Guid userId)
+    {
+        CompetitionTableDALDTO? competitionTable = await Uow.CompetitionRepo.GetByIdTable(id, userId);
+
+        if (competitionTable == null)
+        {
+            throw new ArgumentException("Competition doesn't exist or you're not in it");
+        }
+
+        return _mapper.Map(competitionTable);
     }
 }

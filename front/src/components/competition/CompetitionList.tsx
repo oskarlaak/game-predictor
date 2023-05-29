@@ -5,7 +5,7 @@ type Props = {
     competitions: ICompetitionDTO[];
 };
 
-export default function CompetitionList({competitions}: Props) {
+export default function CompetitionList({competitions}: Props): JSX.Element {
     return (
         <ul>
             {competitions.map(c =>

@@ -8,9 +8,9 @@ type Props<T> = {
     setDto: Dispatch<SetStateAction<T>>;
 };
 
-export default function Input<T>({type, name, placeholder, autoComplete, setDto}: Props<T>) {
+export default function Input<T>({type, name, placeholder, autoComplete, setDto}: Props<T>): JSX.Element {
 
-    function updateDto(e: EventTarget & HTMLInputElement) {
+    function updateDto(e: EventTarget & HTMLInputElement): void {
         setDto(previous => ({
             ...previous,
             [e.name]: e.value

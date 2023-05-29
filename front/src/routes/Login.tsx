@@ -8,7 +8,7 @@ import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
 import PasswordInputLogin from "../components/form/input/PasswordInputLogin";
 
-export default function Login() {
+export default function Login(): JSX.Element {
 
     const {jwt, setJwt} = useContext(JwtContext);
 
@@ -21,7 +21,7 @@ export default function Login() {
 
     const identityService = new IdentityService(setJwt);
 
-    function onSuccess(response: IJwtDTO) {
+    function onSuccess(response: IJwtDTO): void {
         setJwt(response);
         navigate("/");
     }
