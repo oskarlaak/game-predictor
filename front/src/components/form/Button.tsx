@@ -1,5 +1,6 @@
 import { useState } from "react";
 import IErrorDTO from "../../dto/IErrorDTO";
+import { handleRequest } from "../../helpers";
 
 type Props<T extends object> = {
     title: string;
@@ -11,20 +12,12 @@ export default function Button<T extends object>({title, onClickRequest, onSucce
 
     const [error, setError] = useState<string>();
 
-    async function onClick(): Promise<void> {
-        const response: T | IErrorDTO | undefined = await onClickRequest();
-
-        if (response === undefined) {
-            setError("Axios problem");
-        } else if ("errorMessage" in response) {
-            setError(response.errorMessage);
-        } else {
-            onSuccess(response);
-        }
-    }
-
     return <>
-        <button onClick={e => {e.preventDefault(); onClick();}}>
+        <button onClick={e => {
+            e.preventDefault();
+
+            handleRequest(onClickRequest, setError, onSuccess);
+        }}>
             {title}
         </button>
         {error ?? ""}

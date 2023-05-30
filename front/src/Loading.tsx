@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import IErrorDTO from "./dto/IErrorDTO";
+import { handleRequest } from "./helpers";
 
 type Props<T extends object> = {
     request: () => Promise<T | IErrorDTO | undefined>;
-    setter: Dispatch<SetStateAction<T | undefined>>;
+    setter: (previous: T) => void;
 };
 
 export default function Loading<T extends object>({request, setter}: Props<T>): JSX.Element {
@@ -11,15 +12,7 @@ export default function Loading<T extends object>({request, setter}: Props<T>): 
     const [error, setError] = useState<string>();
 
     useEffect(() => {
-        request().then(response => {
-            if (response === undefined) {
-                setError("Axios problem");
-            } else if ("errorMessage" in response) {
-                setError(response.errorMessage);
-            } else {
-                setter(response);
-            }
-        });
+        handleRequest(request, setError, setter);
     }, []);
 
     return <>
