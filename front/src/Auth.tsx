@@ -1,5 +1,4 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { getJwt } from "./jwtHelpers";
 import { useContext } from "react";
 import { LoggedInContext } from "./App";
 

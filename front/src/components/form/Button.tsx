@@ -15,7 +15,6 @@ export default function Button<T extends object>({title, onClickRequest, onSucce
     return <>
         <button onClick={e => {
             e.preventDefault();
-
             handleRequest(onClickRequest, setError, onSuccess);
         }}>
             {title}
