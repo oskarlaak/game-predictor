@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import IdentityService from "../services/IdentityService";
 import IJwtDTO from "../dto/identity/IJwtDTO";
 import EmailInput from "../components/form/input/EmailInput";
@@ -9,8 +9,11 @@ import PasswordInputRegister from "../components/form/input/PasswordInputRegiste
 import PasswordConfirmInputRegister from "../components/form/input/PasswordConfirmInputRegister";
 import UsernameInput from "../components/form/input/UsernameInput";
 import { setJwt } from "../jwtHelpers";
+import { LoggedInContext } from "../App";
 
 export default function Register(): JSX.Element {
+
+    const {loggedIn, setLoggedIn} = useContext(LoggedInContext);
 
     const navigate = useNavigate();
 
@@ -24,6 +27,8 @@ export default function Register(): JSX.Element {
     const identityService = new IdentityService();
 
     function onSuccess(response: IJwtDTO): void {
+        setLoggedIn(true);
+
         setJwt(response);
         navigate("/");
     }
