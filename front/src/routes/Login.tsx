@@ -13,7 +13,7 @@ export default function Login(): JSX.Element {
 
     const {loggedIn, setLoggedIn} = useContext(LoggedInContext);
 
-    //const location = useLocation();
+    const location = useLocation();
 
     const navigate = useNavigate();
 
@@ -29,9 +29,7 @@ export default function Login(): JSX.Element {
 
         setJwt(response);
 
-        //console.log(location.state); TODO
-
-        navigate("/");
+        navigate(location.state ?? "/");
     }
 
     return <>

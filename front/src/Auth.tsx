@@ -14,5 +14,5 @@ export default function Auth({children}: Props): JSX.Element {
   
     return loggedIn
         ? children
-        : <Navigate to="/login" state={location} replace />;
+        : <Navigate to="/login" state={location.pathname} replace />;
 }
