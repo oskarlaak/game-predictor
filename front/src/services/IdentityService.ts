@@ -3,11 +3,12 @@ import ISuccessDTO from "../dto/ISuccessDTO";
 import IJwtDTO from "../dto/identity/IJwtDTO";
 import ILoginDTO from "../dto/identity/ILoginDTO";
 import IRegisterDTO from "../dto/identity/IRegisterDTO";
+import { getJwt } from "../jwtHelpers";
 import BaseAuthoredService from "./base/BaseAuthoredService";
 
 export default class IdentityService extends BaseAuthoredService {
-    public constructor(setJwt: (jwt: IJwtDTO | null) => void) {
-        super("identity/", setJwt);
+    public constructor() {
+        super("identity/");
     }
 
     public async register(registerDto: IRegisterDTO): Promise<IJwtDTO | IErrorDTO | undefined> {
@@ -18,7 +19,7 @@ export default class IdentityService extends BaseAuthoredService {
         return await this.unauthoredPost<IJwtDTO | IErrorDTO>("login", loginDto);
     }
 
-    public async logout(jwt: IJwtDTO): Promise<ISuccessDTO | IErrorDTO | undefined> {
-        return await this.authoredPost<ISuccessDTO | IErrorDTO>(jwt, "logout", jwt);
+    public async logout(): Promise<ISuccessDTO | IErrorDTO | undefined> {
+        return await this.authoredPost<ISuccessDTO | IErrorDTO>("logout", getJwt());
     }
 }

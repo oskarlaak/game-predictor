@@ -1,16 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
-import { JwtContext } from "../App";
+import { useState } from "react";
 import IdentityService from "../services/IdentityService";
 import ILoginDTO from "../dto/identity/ILoginDTO";
 import IJwtDTO from "../dto/identity/IJwtDTO";
 import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
 import PasswordInputLogin from "../components/form/input/PasswordInputLogin";
+import { setJwt } from "../jwtHelpers";
 
 export default function Login(): JSX.Element {
-
-    const {jwt, setJwt} = useContext(JwtContext);
 
     const navigate = useNavigate();
 
@@ -19,7 +17,7 @@ export default function Login(): JSX.Element {
         password: ""
     });
 
-    const identityService = new IdentityService(setJwt);
+    const identityService = new IdentityService();
 
     function onSuccess(response: IJwtDTO): void {
         setJwt(response);

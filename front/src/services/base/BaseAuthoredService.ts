@@ -4,37 +4,31 @@ import IErrorDTO from "../../dto/IErrorDTO";
 import ISuccessDTO from "../../dto/ISuccessDTO";
 import IJwtDTO from "../../dto/identity/IJwtDTO";
 import BaseService from "./BaseService";
+import { setJwt, getJwt } from "../../jwtHelpers";
 
 export default abstract class BaseAuthoredService extends BaseService {
 
-    private readonly setJwt: (jwt: IJwtDTO | null) => void;
-
-    protected constructor(
-        url: string,
-        setJwt: (jwt: IJwtDTO | null) => void
-    ) {
+    protected constructor(url: string) {
         super(url);
-        this.setJwt = setJwt;
     }
 
-    protected async defaultAuthoredPost(jwt: IJwtDTO, postDto: any): Promise<ICreatedDTO | IErrorDTO | undefined> {
-        return await this.authoredPost<ICreatedDTO | IErrorDTO>(jwt, "post", postDto);
+    protected async defaultAuthoredPost(postDto: unknown): Promise<ICreatedDTO | IErrorDTO | undefined> {
+        return await this.authoredPost<ICreatedDTO | IErrorDTO>("post", postDto);
     }
 
-    protected async defaultAuthoredPatch(jwt: IJwtDTO, id: string, putDto: any): Promise<ISuccessDTO | IErrorDTO | undefined> {
-        return await this.authoredPatch<ISuccessDTO | IErrorDTO>(jwt, "patch/" + id, putDto);
+    protected async defaultAuthoredPatch(id: string, putDto: unknown): Promise<ISuccessDTO | IErrorDTO | undefined> {
+        return await this.authoredPatch<ISuccessDTO | IErrorDTO>("patch/" + id, putDto);
     }
 
-    protected async defaultAuthoredDelete(jwt: IJwtDTO, id: string): Promise<ISuccessDTO | IErrorDTO | undefined> {
-        return await this.authoredDelete<ISuccessDTO | IErrorDTO>(jwt, "delete/" + id);
+    protected async defaultAuthoredDelete(id: string): Promise<ISuccessDTO | IErrorDTO | undefined> {
+        return await this.authoredDelete<ISuccessDTO | IErrorDTO>("delete/" + id);
     }
 
-    private async refreshJwt(jwt: IJwtDTO): Promise<IJwtDTO | IErrorDTO | undefined> {
-        return await this.unauthoredPost<IJwtDTO | IErrorDTO>(this.baseUrl + "identity/refreshjwt", jwt);
+    private async refreshJwt(): Promise<IJwtDTO | IErrorDTO | undefined> {
+        return await this.unauthoredPost<IJwtDTO | IErrorDTO>(this.baseUrl + "identity/refreshjwt", getJwt());
     }
 
     protected async authoredGet<T>(
-        jwt: IJwtDTO,
         url: string,
         refreshJwtWhenUnauthorized = true
     ): Promise<T | undefined> {
@@ -45,7 +39,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 url,
                 {
                     headers: {
-                        "Authorization": "Bearer " + jwt.token
+                        "Authorization": "Bearer " + getJwt()?.token
                     }
                 }
             );
@@ -54,12 +48,12 @@ export default abstract class BaseAuthoredService extends BaseService {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
 
-                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
+                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt();
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
-                            this.setJwt(refreshResponse);
 
-                            return await this.authoredGet<T>(refreshResponse, url, false);
+                            setJwt(refreshResponse);
+                            return await this.authoredGet<T>(url, false);
                         }
                     }
                     return undefined;
@@ -72,9 +66,8 @@ export default abstract class BaseAuthoredService extends BaseService {
     }
 
     protected async authoredPost<T>(
-        jwt: IJwtDTO,
         url: string,
-        data?: any,
+        data?: unknown,
         refreshJwtWhenUnauthorized = true
     ): Promise<T | undefined> {
     
@@ -85,7 +78,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 data,
                 {
                     headers: {
-                        "Authorization": "Bearer " + jwt.token
+                        "Authorization": "Bearer " + getJwt()?.token
                     }
                 }
             );
@@ -94,12 +87,12 @@ export default abstract class BaseAuthoredService extends BaseService {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
 
-                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
+                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt();
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
-                            this.setJwt(refreshResponse);
 
-                            return await this.authoredPost<T>(refreshResponse, url, data, false);
+                            setJwt(refreshResponse);
+                            return await this.authoredPost<T>(url, data, false);
                         }
                     }
                     return undefined;
@@ -112,9 +105,8 @@ export default abstract class BaseAuthoredService extends BaseService {
     }
 
     protected async authoredPatch<T>(
-        jwt: IJwtDTO,
         url: string,
-        data?: any,
+        data?: unknown,
         refreshJwtWhenUnauthorized = true
     ): Promise<T | undefined> {
     
@@ -125,7 +117,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 data,
                 {
                     headers: {
-                        "Authorization": "Bearer " + jwt.token
+                        "Authorization": "Bearer " + getJwt()?.token
                     }
                 }
             );
@@ -134,12 +126,12 @@ export default abstract class BaseAuthoredService extends BaseService {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
 
-                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
+                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt();
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
-                            this.setJwt(refreshResponse);
 
-                            return await this.authoredPatch<T>(refreshResponse, url, data, false);
+                            setJwt(refreshResponse);
+                            return await this.authoredPatch<T>(url, data, false);
                         }
                     }
                     return undefined;
@@ -152,7 +144,6 @@ export default abstract class BaseAuthoredService extends BaseService {
     }
 
     protected async authoredDelete<T>(
-        jwt: IJwtDTO,
         url: string,
         refreshJwtWhenUnauthorized = true
     ): Promise<T | undefined> {
@@ -163,7 +154,7 @@ export default abstract class BaseAuthoredService extends BaseService {
                 url,
                 {
                     headers: {
-                        "Authorization": "Bearer " + jwt.token
+                        "Authorization": "Bearer " + getJwt()?.token
                     }
                 }
             );
@@ -172,12 +163,12 @@ export default abstract class BaseAuthoredService extends BaseService {
                 if (e.response.status === 401) {
                     if (refreshJwtWhenUnauthorized) {
 
-                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt(jwt);
+                        const refreshResponse: IJwtDTO | IErrorDTO | undefined = await this.refreshJwt();
 
                         if (refreshResponse !== undefined && !("errorMessage" in refreshResponse)) {
-                            this.setJwt(refreshResponse);
 
-                            return await this.authoredDelete<T>(refreshResponse, url, false);
+                            setJwt(refreshResponse);
+                            return await this.authoredDelete<T>(url, false);
                         }
                     }
                     return undefined;
