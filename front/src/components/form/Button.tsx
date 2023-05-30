@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext } from "react";
 import IErrorDTO from "../../dto/IErrorDTO";
 import { handleRequest } from "../../helpers";
+import { ErrorContext } from "../../App";
 
 type Props<T extends object> = {
     title: string;
@@ -10,15 +11,14 @@ type Props<T extends object> = {
 
 export default function Button<T extends object>({title, onClickRequest, onSuccess}: Props<T>): JSX.Element {
 
-    const [error, setError] = useState<string>();
+    const {error, setError} = useContext(ErrorContext);
 
     return <>
         <button onClick={e => {
             e.preventDefault();
-            handleRequest(onClickRequest, setError, onSuccess);
+            handleRequest<T>(onClickRequest, setError, onSuccess);
         }}>
             {title}
         </button>
-        {error ?? ""}
     </>;
 }

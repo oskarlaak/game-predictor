@@ -6,7 +6,7 @@ import CompetitionService from "../services/CompetitionService";
 
 export default function Competitions(): JSX.Element {
 
-    const [competitions, setCompetitions] = useState<ICompetitionDTO[]>();
+    const [competitions, setCompetitions] = useState<ICompetitionDTO[] | undefined>();
 
     const competitionService = new CompetitionService();
 

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import IErrorDTO from "./dto/IErrorDTO";
 import { handleRequest } from "./helpers";
+import { ErrorContext } from "./App";
 
 type Props<T extends object> = {
     request: () => Promise<T | IErrorDTO | undefined>;
@@ -9,16 +10,14 @@ type Props<T extends object> = {
 
 export default function Loading<T extends object>({request, setter}: Props<T>): JSX.Element {
 
-    const [error, setError] = useState<string>();
+    const {error, setError} = useContext(ErrorContext);
+
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        handleRequest(request, setError, setter);
+        handleRequest<T>(request, setError, setter);
+        setLoading(false);
     }, []);
 
-    return <>
-        {error === undefined
-            ? "Loading..."
-            : error
-        }
-    </>;
+    return <>{loading ? "Loading..." : ""}</>;
 }

@@ -3,7 +3,7 @@ import IErrorDTO from "./dto/IErrorDTO";
 export async function handleRequest<T extends object>(
     request: () => Promise<T | IErrorDTO | undefined>,
     errorSetter: (text: string) => void,
-    successSetter: (previous: T) => void
+    onSuccess: (previous: T) => void
 ): Promise<void> {
 
     const response = await request();
@@ -13,6 +13,6 @@ export async function handleRequest<T extends object>(
     } else if ("errorMessage" in response) {
         errorSetter(response.errorMessage);
     } else {
-        successSetter(response);
+        onSuccess(response);
     }
 }
