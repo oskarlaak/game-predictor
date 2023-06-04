@@ -1,5 +1,5 @@
 import { LoggedInContext } from "../../App";
-import { removeJwt } from "../../jwtHelpers";
+import { removeJwt } from "../../helpers/jwtHelpers";
 import IdentityService from "../../services/UserAuthService";
 import HeaderLink from "./HeaderLink";
 import { useContext } from "react";

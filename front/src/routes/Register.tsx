@@ -8,7 +8,7 @@ import IRegisterDTO from "../dto/user-auth/IRegisterDTO";
 import PasswordInputRegister from "../components/form/input/PasswordInputRegister";
 import PasswordConfirmInputRegister from "../components/form/input/PasswordConfirmInputRegister";
 import UsernameInput from "../components/form/input/UsernameInput";
-import { setJwt } from "../jwtHelpers";
+import { setJwt } from "../helpers/jwtHelpers";
 import { LoggedInContext } from "../App";
 
 export default function Register(): JSX.Element {

@@ -6,7 +6,7 @@ import IJwtDTO from "../dto/user-auth/IJwtDTO";
 import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
 import PasswordInputLogin from "../components/form/input/PasswordInputLogin";
-import { setJwt } from "../jwtHelpers";
+import { setJwt } from "../helpers/jwtHelpers";
 import { LoggedInContext } from "../App";
 
 export default function Login(): JSX.Element {

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import IErrorDTO from "../../dto/IErrorDTO";
-import { handleRequest } from "../../helpers";
+import { handleRequest } from "../../helpers/helpers";
 import { ErrorContext } from "../../App";
 
 type Props<T extends object> = {

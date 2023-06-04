@@ -1,4 +1,4 @@
-import IErrorDTO from "./dto/IErrorDTO";
+import IErrorDTO from "../dto/IErrorDTO";
 
 export async function handleRequest<T extends object>(
     request: () => Promise<T | IErrorDTO | undefined>,

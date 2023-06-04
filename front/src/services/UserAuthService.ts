@@ -3,7 +3,7 @@ import ISuccessDTO from "../dto/ISuccessDTO";
 import IJwtDTO from "../dto/user-auth/IJwtDTO";
 import ILoginDTO from "../dto/user-auth/ILoginDTO";
 import IRegisterDTO from "../dto/user-auth/IRegisterDTO";
-import { getJwt } from "../jwtHelpers";
+import { getJwt } from "../helpers/jwtHelpers";
 import BaseAuthoredService from "./base/BaseAuthoredService";
 
 export default class UserAuthService extends BaseAuthoredService {

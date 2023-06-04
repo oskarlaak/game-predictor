@@ -2,7 +2,7 @@ import { AxiosResponse, isAxiosError } from "axios";
 import IErrorDTO from "../../dto/IErrorDTO";
 import IJwtDTO from "../../dto/user-auth/IJwtDTO";
 import BaseService from "./BaseService";
-import { setJwt, getJwt } from "../../jwtHelpers";
+import { setJwt, getJwt } from "../../helpers/jwtHelpers";
 
 export default abstract class BaseAuthoredService extends BaseService {
 
