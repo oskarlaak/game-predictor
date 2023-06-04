@@ -18,29 +18,7 @@ public class DataSeeder
     
     public static void SeedAppData(AppDbContext ctx)
     {
-        if (!ctx.CompetitionTypes.Any())
-        {
-            CompetitionType football = new()
-            {
-                Name = "Football"
-            };
-            ctx.CompetitionTypes.AddRange(football);
-        }
-
-        if (!ctx.ScoringRules.Any())
-        {
-            ScoringRules defaultRules = new()
-            {
-                Name = "Default",
-                PointsOnCorrectScore = 3,
-                PointsOnCorrectScoreDifference = 2,
-                PointsOnCorrectResult = 1,
-                PointsMultiplier = 1
-            };
-            ctx.ScoringRules.AddRange(defaultRules);
-        }
-
-        ctx.SaveChanges();
+        // ctx.SaveChanges();
     }
     
     private static User? SeedUser(
@@ -76,12 +54,8 @@ public class DataSeeder
 
         SeedAppData(ctx);
 
-        CompetitionType ct = ctx.CompetitionTypes.First(ct => ct.Name == "Football");
-        ScoringRules sr = ctx.ScoringRules.First(sr => sr.Name == "Default");
-
         Competition c = new()
         {
-            CompetitionType = ct,
             Name = "MM 2022",
             HasEnded = false
         };
@@ -90,8 +64,10 @@ public class DataSeeder
         CompetitionStage cs = new()
         {
             Competition = c,
-            ScoringRules = sr,
             Name = "GROUP STAGE",
+            PointsOnCorrectScore = 3,
+            PointsOnCorrectScoreDifference = 2,
+            PointsOnCorrectResult = 1,
             CreatedDT = DateTime.UtcNow
         };
         ctx.CompetitionStages.AddRange(cs);

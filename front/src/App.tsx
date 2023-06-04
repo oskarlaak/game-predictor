@@ -10,6 +10,7 @@ import Auth from "./Auth";
 import { createContext, useState } from "react";
 import { hasJwt } from "./jwtHelpers";
 import ErrorPopup from "./ErrorPopup";
+import "./styles.css";
 
 interface ILoggedInContext {
     loggedIn: boolean;

@@ -6,9 +6,9 @@ namespace DAL.Interfaces.App.Repos;
 
 public interface ICompetitionRepo : IBaseRepo<Competition>
 {
-    Task<IEnumerable<CompetitionDALDTO>> GetAll(Guid userId);
+    Task<IEnumerable<CompetitionDALDTO>> GetAllForUser(Guid userId);
 
-    Task<CompetitionDALDTO?> GetById(Guid id, Guid userId);
+    Task<CompetitionPreviewDALDTO> GetPreview(Guid id);
     
-    Task<CompetitionTableDALDTO?> GetByIdTable(Guid id, Guid userId);
+    Task<CompetitionTableDALDTO> GetTableForUser(Guid id, Guid userId);
 }

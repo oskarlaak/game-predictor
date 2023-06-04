@@ -15,14 +15,14 @@ public abstract class BaseRepo<TEntity, TDbContext> : IBaseRepo<TEntity>
         DbSet = ctx.Set<TEntity>();
     }
 
-    public async Task<TEntity?> GetById(Guid id)
+    public async Task<TEntity> Get(Guid id)
     {
-        return await DbSet.FindAsync(id);
+        return (await DbSet.FindAsync(id))!;
     }
 
-    public async Task<bool> HasEntityWithId(Guid id)
+    public async Task<bool> DoesNotHaveEntity(Guid id)
     {
-        return await DbSet.AnyAsync(e => e.Id == id);
+        return await DbSet.AllAsync(e => e.Id != id);
     }
 
     public async Task<Guid> Add(TEntity entity)
@@ -30,14 +30,8 @@ public abstract class BaseRepo<TEntity, TDbContext> : IBaseRepo<TEntity>
         return (await DbSet.AddAsync(entity)).Entity.Id;
     }
 
-    public async Task<bool> DeleteById(Guid id)
+    public async Task Delete(Guid id)
     {
-        TEntity? entity = await GetById(id);
-
-        if (entity == null) return false;
-
-        DbSet.Remove(entity);
-
-        return true;
+        DbSet.Remove(await Get(id));
     }
 }

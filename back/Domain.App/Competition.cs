@@ -4,9 +4,6 @@ namespace Domain.App;
 
 public class Competition : BaseDomainEntity
 {
-    public Guid CompetitionTypeId { get; set; }
-    public CompetitionType? CompetitionType { get; set; }
-
     public string Name { get; set; } = default!;
 
     public bool HasEnded { get; set; }

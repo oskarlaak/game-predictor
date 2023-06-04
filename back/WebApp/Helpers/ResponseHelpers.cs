@@ -5,7 +5,7 @@ namespace WebApp.Helpers;
 
 public static class ResponseHelpers
 {
-    public static BadRequestObjectResult ErrorResponse(string message)
+    public static BadRequestObjectResult Error(string message)
     {
         return new BadRequestObjectResult(new ErrorDTO()
         {
@@ -13,7 +13,7 @@ public static class ResponseHelpers
         });
     }
 
-    public static OkObjectResult SuccessResponse(string message)
+    public static OkObjectResult Success(string message)
     {
         return new OkObjectResult(new SuccessDTO()
         {
@@ -21,7 +21,7 @@ public static class ResponseHelpers
         });
     }
 
-    public static OkObjectResult CreatedResponse(Guid id)
+    public static OkObjectResult Created(Guid id)
     {
         return new OkObjectResult(new CreatedDTO()
         {

@@ -1,6 +1,4 @@
 using System.Text;
-using BLL.App;
-using BLL.Interfaces.App;
 using DAL.App;
 using DAL.App.Seeding;
 using DAL.Interfaces.App;
@@ -26,7 +24,6 @@ string connectionString =
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<IAppUOW, AppUOW>();
-builder.Services.AddScoped<IAppBLL, AppBLL>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

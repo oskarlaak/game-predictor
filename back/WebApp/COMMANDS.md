@@ -1,7 +1,6 @@
 # tools
 ~~~bash
 dotnet tool update --global dotnet-ef
-dotnet tool update --global dotnet-aspnet-codegenerator
 ~~~
 
 # migrations

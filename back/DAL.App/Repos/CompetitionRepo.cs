@@ -16,7 +16,7 @@ public class CompetitionRepo : AppBaseRepo<Competition>, ICompetitionRepo
     {
     }
 
-    public async Task<IEnumerable<CompetitionDALDTO>> GetAll(Guid userId)
+    public async Task<IEnumerable<CompetitionDALDTO>> GetAllForUser(Guid userId)
     {
         return await DbSet
             .Where(c => c.CompetitionUsers!.Any(cu => cu.UserId == userId))
@@ -25,30 +25,6 @@ public class CompetitionRepo : AppBaseRepo<Competition>, ICompetitionRepo
             {
                 Id = c.Id,
                 Name = c.Name,
-                Type = c.CompetitionType!.Name,
-                HasEnded = c.HasEnded,
-                UserIsHost = c.CompetitionUsers!.First(cu => cu.UserId == userId).IsHost,
-                ActionCount = (from cs in c.CompetitionStages! from gg in cs.GameGroups! from g in gg.Games! select g)
-                    .Count(g =>
-                        g.PredictionDeadlineDT > DateTime.UtcNow 
-                            ? g.Predictions!.All(p => p.CompetitionUser!.UserId != userId)
-                            : c.CompetitionUsers!.First(cu => cu.UserId == userId).IsHost &&
-                              g.TeamOneScore == null &&
-                              g.TeamTwoScore == null
-                    )
-            })
-            .ToListAsync();
-    }
-
-    public async Task<CompetitionDALDTO?> GetById(Guid id, Guid userId)
-    {
-        return await DbSet
-            .Where(c => c.Id == id && c.CompetitionUsers!.Any(cu => cu.UserId == userId))
-            .Select(c => new CompetitionDALDTO()
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Type = c.CompetitionType!.Name,
                 HasEnded = c.HasEnded,
                 UserIsHost = c.CompetitionUsers!.First(cu => cu.UserId == userId).IsHost,
                 ActionCount = (from cs in c.CompetitionStages! from gg in cs.GameGroups! from g in gg.Games! select g)
@@ -60,15 +36,30 @@ public class CompetitionRepo : AppBaseRepo<Competition>, ICompetitionRepo
                               g.TeamTwoScore == null
                     )
             })
-            .FirstOrDefaultAsync();
+            .ToListAsync();
     }
 
-    public async Task<CompetitionTableDALDTO?> GetByIdTable(Guid id, Guid userId)
+    public async Task<CompetitionPreviewDALDTO> GetPreview(Guid id)
     {
         return await DbSet
-            .Where(c => c.Id == id && c.CompetitionUsers!.Any(cu => cu.UserId == userId))
+            .Where(c => c.Id == id)
+            .Select(c => new CompetitionPreviewDALDTO()
+            {
+                Id = c.Id,
+                Name = c.Name
+            })
+            .FirstAsync();
+    }
+
+    public async Task<CompetitionTableDALDTO> GetTableForUser(Guid id, Guid userId)
+    {
+        return await DbSet
+            .Where(c => c.Id == id)
             .Select(c => new CompetitionTableDALDTO()
             {
+                Name = c.Name,
+                HasEnded = c.HasEnded,
+                UserIsHost = c.CompetitionUsers!.First(cu => cu.UserId == userId).IsHost,
                 CompetitionUsers = c.CompetitionUsers!
                     .OrderByDescending(cu => cu.UserId == userId)
                     .ThenBy(cu => cu.CreatedDT)
@@ -81,11 +72,9 @@ public class CompetitionRepo : AppBaseRepo<Competition>, ICompetitionRepo
                 {
                     Id = cs.Id,
                     Name = cs.Name,
-                    ScoringRulesName = cs.ScoringRules!.Name,
-                    PointsOnCorrectScore = cs.ScoringRules!.PointsOnCorrectScore,
-                    PointsOnCorrectScoreDifference = cs.ScoringRules!.PointsOnCorrectScoreDifference,
-                    PointsOnCorrectResult = cs.ScoringRules!.PointsOnCorrectResult,
-                    PointsMultiplier = cs.ScoringRules!.PointsMultiplier,
+                    PointsOnCorrectScore = cs.PointsOnCorrectScore,
+                    PointsOnCorrectScoreDifference = cs.PointsOnCorrectScoreDifference,
+                    PointsOnCorrectResult = cs.PointsOnCorrectResult,
                     GameGroups = cs.GameGroups!.OrderBy(gg => gg.CreatedDT).Select(gg => new GameGroupDALDTO()
                     {
                         Id = gg.Id,
@@ -108,6 +97,6 @@ public class CompetitionRepo : AppBaseRepo<Competition>, ICompetitionRepo
                     })
                 })
             })
-            .FirstOrDefaultAsync();
+            .FirstAsync();
     }
 }

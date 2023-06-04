@@ -7,7 +7,7 @@ namespace Helpers.Base;
 
 public static class IdentityHelpers
 {
-    public static Guid GetId(this ClaimsPrincipal user)
+    public static Guid Id(this ClaimsPrincipal user)
     {
         return Guid.Parse(
             user.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value
