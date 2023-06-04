@@ -1,25 +1,25 @@
 import IErrorDTO from "../dto/IErrorDTO";
 import ISuccessDTO from "../dto/ISuccessDTO";
-import IJwtDTO from "../dto/identity/IJwtDTO";
-import ILoginDTO from "../dto/identity/ILoginDTO";
-import IRegisterDTO from "../dto/identity/IRegisterDTO";
+import IJwtDTO from "../dto/user-auth/IJwtDTO";
+import ILoginDTO from "../dto/user-auth/ILoginDTO";
+import IRegisterDTO from "../dto/user-auth/IRegisterDTO";
 import { getJwt } from "../jwtHelpers";
 import BaseAuthoredService from "./base/BaseAuthoredService";
 
-export default class IdentityService extends BaseAuthoredService {
+export default class UserAuthService extends BaseAuthoredService {
     public constructor() {
-        super("identity/");
+        super("UserAuth/");
     }
 
     public async register(registerDto: IRegisterDTO): Promise<IJwtDTO | IErrorDTO | undefined> {
-        return await this.unauthoredPost<IJwtDTO | IErrorDTO>("register", registerDto);
+        return await this.unauthoredPost<IJwtDTO>("Register", registerDto);
     }
 
     public async login(loginDto: ILoginDTO): Promise<IJwtDTO | IErrorDTO | undefined> {
-        return await this.unauthoredPost<IJwtDTO | IErrorDTO>("login", loginDto);
+        return await this.unauthoredPost<IJwtDTO>("Login", loginDto);
     }
 
     public async logout(): Promise<ISuccessDTO | IErrorDTO | undefined> {
-        return await this.authoredPost<ISuccessDTO | IErrorDTO>("logout", getJwt());
+        return await this.authoredPost<ISuccessDTO>("Logout", getJwt());
     }
 }

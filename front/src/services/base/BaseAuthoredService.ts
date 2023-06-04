@@ -1,8 +1,6 @@
 import { AxiosResponse, isAxiosError } from "axios";
-import ICreatedDTO from "../../dto/ICreatedDTO";
 import IErrorDTO from "../../dto/IErrorDTO";
-import ISuccessDTO from "../../dto/ISuccessDTO";
-import IJwtDTO from "../../dto/identity/IJwtDTO";
+import IJwtDTO from "../../dto/user-auth/IJwtDTO";
 import BaseService from "./BaseService";
 import { setJwt, getJwt } from "../../jwtHelpers";
 
@@ -12,26 +10,14 @@ export default abstract class BaseAuthoredService extends BaseService {
         super(url);
     }
 
-    protected async defaultAuthoredPost(postDto: unknown): Promise<ICreatedDTO | IErrorDTO | undefined> {
-        return await this.authoredPost<ICreatedDTO | IErrorDTO>("post", postDto);
-    }
-
-    protected async defaultAuthoredPatch(id: string, putDto: unknown): Promise<ISuccessDTO | IErrorDTO | undefined> {
-        return await this.authoredPatch<ISuccessDTO | IErrorDTO>("patch/" + id, putDto);
-    }
-
-    protected async defaultAuthoredDelete(id: string): Promise<ISuccessDTO | IErrorDTO | undefined> {
-        return await this.authoredDelete<ISuccessDTO | IErrorDTO>("delete/" + id);
-    }
-
     private async refreshJwt(): Promise<IJwtDTO | IErrorDTO | undefined> {
-        return await this.unauthoredPost<IJwtDTO | IErrorDTO>(this.baseUrl + "identity/refreshjwt", getJwt());
+        return await this.unauthoredPost<IJwtDTO | IErrorDTO>(this.baseUrl + "UserAuth/RefreshJwt", getJwt());
     }
 
     protected async authoredGet<T>(
         url: string,
         refreshJwtWhenUnauthorized = true
-    ): Promise<T | undefined> {
+    ): Promise<T | IErrorDTO | undefined> {
 
         let response: AxiosResponse<T>;
         try{
@@ -69,7 +55,7 @@ export default abstract class BaseAuthoredService extends BaseService {
         url: string,
         data?: unknown,
         refreshJwtWhenUnauthorized = true
-    ): Promise<T | undefined> {
+    ): Promise<T | IErrorDTO | undefined> {
     
         let response: AxiosResponse<T>;
         try{
@@ -108,7 +94,7 @@ export default abstract class BaseAuthoredService extends BaseService {
         url: string,
         data?: unknown,
         refreshJwtWhenUnauthorized = true
-    ): Promise<T | undefined> {
+    ): Promise<T | IErrorDTO | undefined> {
     
         let response: AxiosResponse<T>;
         try{
@@ -146,7 +132,7 @@ export default abstract class BaseAuthoredService extends BaseService {
     protected async authoredDelete<T>(
         url: string,
         refreshJwtWhenUnauthorized = true
-    ): Promise<T | undefined> {
+    ): Promise<T | IErrorDTO | undefined> {
     
         let response: AxiosResponse<T>;
         try{

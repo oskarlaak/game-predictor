@@ -1,4 +1,4 @@
-import IJwtDTO from "./dto/identity/IJwtDTO";
+import IJwtDTO from "./dto/user-auth/IJwtDTO";
 
 export function hasJwt(): boolean {
     return getJwt() !== undefined;

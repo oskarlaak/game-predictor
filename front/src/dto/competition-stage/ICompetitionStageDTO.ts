@@ -3,6 +3,8 @@ import IGameGroupDTO from "../game-group/IGameGroupDTO";
 export default interface ICompetitionStageDTO {
     id: string;
     name: string;
-    scoringRulesName: string;
+    pointsOnCorrectScore: number;
+    pointsOnCorrectScoreDifference: number;
+    pointsOnCorrectResult: number;
     gameGroups: IGameGroupDTO[];
 }

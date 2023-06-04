@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import IdentityService from "../services/IdentityService";
-import IJwtDTO from "../dto/identity/IJwtDTO";
+import IdentityService from "../services/UserAuthService";
+import IJwtDTO from "../dto/user-auth/IJwtDTO";
 import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
-import IRegisterDTO from "../dto/identity/IRegisterDTO";
+import IRegisterDTO from "../dto/user-auth/IRegisterDTO";
 import PasswordInputRegister from "../components/form/input/PasswordInputRegister";
 import PasswordConfirmInputRegister from "../components/form/input/PasswordConfirmInputRegister";
 import UsernameInput from "../components/form/input/UsernameInput";

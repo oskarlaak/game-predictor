@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import IdentityService from "../services/IdentityService";
-import ILoginDTO from "../dto/identity/ILoginDTO";
-import IJwtDTO from "../dto/identity/IJwtDTO";
+import IdentityService from "../services/UserAuthService";
+import ILoginDTO from "../dto/user-auth/ILoginDTO";
+import IJwtDTO from "../dto/user-auth/IJwtDTO";
 import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
 import PasswordInputLogin from "../components/form/input/PasswordInputLogin";

@@ -1,4 +1,5 @@
 import Axios, { AxiosInstance, AxiosResponse, isAxiosError } from "axios";
+import IErrorDTO from "../../dto/IErrorDTO";
 
 export default abstract class BaseService {
     protected readonly axios: AxiosInstance;
@@ -17,7 +18,7 @@ export default abstract class BaseService {
         });
     }
 
-    protected async unauthoredGet<T>(url: string): Promise<T | undefined> {
+    protected async unauthoredGet<T>(url: string): Promise<T | IErrorDTO | undefined> {
         let response: AxiosResponse<T>;
         try {
             response = await this.axios.get<T>(
@@ -32,7 +33,7 @@ export default abstract class BaseService {
         return response.data;
     }
 
-    protected async unauthoredPost<T>(url: string, data?: any): Promise<T | undefined> {
+    protected async unauthoredPost<T>(url: string, data?: any): Promise<T | IErrorDTO | undefined> {
         let response: AxiosResponse<T>;
         try {
             response = await this.axios.post<T>(
