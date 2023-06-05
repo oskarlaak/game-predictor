@@ -18,7 +18,7 @@ export default function App(): JSX.Element {
 
     const [loggedIn, setLoggedIn] = useState<boolean>(hasJwt());
 
-    return (
+    return <>
         <LoggedInContext.Provider value={{loggedIn, setLoggedIn}}>
             <Header/>
 
@@ -28,5 +28,5 @@ export default function App(): JSX.Element {
                 <Route path="/login" element={<Login/>}/>
             </Routes>
         </LoggedInContext.Provider>
-    );
+    </>;
 }

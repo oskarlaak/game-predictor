@@ -6,11 +6,13 @@ type Props<T> = {
 };
 
 export default function PasswordInputRegister<T>({setDto}: Props<T>): JSX.Element {
-    return <Input
-        type="password"
-        name="password"
-        placeholder="Password"
-        autoComplete="new-password"
-        setDto={setDto}
-    />;
+    return <>
+        <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            autoComplete="new-password"
+            setDto={setDto}
+        />
+    </>;
 }

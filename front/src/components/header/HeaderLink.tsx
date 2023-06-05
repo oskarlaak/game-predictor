@@ -7,7 +7,9 @@ type Props = {
 };
 
 export default function HeaderLink({to, text, beforeNavigate}: Props): JSX.Element {
-    return <li>
-        <Link to={to} onClick={beforeNavigate}>{text}</Link>
-    </li>;
+    return <>
+        <li>
+            <Link to={to} onClick={beforeNavigate}>{text}</Link>
+        </li>
+    </>;
 }

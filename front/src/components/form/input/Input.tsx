@@ -17,11 +17,13 @@ export default function Input<T>({type, name, placeholder, autoComplete, setDto}
         }));
     }
 
-    return <input
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        onChange={e => updateDto(e.target)}
-    />;
+    return <>
+        <input
+            type={type}
+            name={name}
+            placeholder={placeholder}
+            autoComplete={autoComplete}
+            onChange={e => updateDto(e.target)}
+        />
+    </>;
 }
