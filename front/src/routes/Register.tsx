@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import IdentityService from "../services/UserAuthService";
+import UserAuthService from "../services/UserAuthService";
 import IJwtDTO from "../dto/user-auth/IJwtDTO";
 import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
@@ -24,7 +24,7 @@ export default function Register(): JSX.Element {
         confirmPassword: ""
     });
 
-    const identityService = new IdentityService();
+    const userAuthService = new UserAuthService();
 
     function onSuccess(response: IJwtDTO): void {
         setLoggedIn(true);
@@ -50,7 +50,7 @@ export default function Register(): JSX.Element {
             />
             <Button<IJwtDTO>
                 title="Register"
-                onClickRequest={() => identityService.register(dto)}
+                onClickRequest={() => userAuthService.register(dto)}
                 onSuccess={onSuccess}
             />
         </form>

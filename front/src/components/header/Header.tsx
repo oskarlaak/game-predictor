@@ -1,13 +1,13 @@
-import HeaderAuth from "./HeaderAuth";
-import HeaderLink from "./HeaderLink";
+import { Link } from "react-router-dom";
+import HeaderUserAuth from "./HeaderUserAuth";
 
 export default function Header(): JSX.Element {
     return <>
         <header>
             <nav>
+                <Link to="/">GamePredictor</Link>
                 <ul>
-                    <HeaderLink to="/" text="GamePredictor"/>
-                    <HeaderAuth/>
+                    <HeaderUserAuth/>
                 </ul>
             </nav>
         </header>

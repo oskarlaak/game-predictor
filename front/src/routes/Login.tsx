@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import IdentityService from "../services/UserAuthService";
+import UserAuthService from "../services/UserAuthService";
 import ILoginDTO from "../dto/user-auth/ILoginDTO";
 import IJwtDTO from "../dto/user-auth/IJwtDTO";
 import EmailInput from "../components/form/input/EmailInput";
@@ -22,7 +22,7 @@ export default function Login(): JSX.Element {
         password: ""
     });
 
-    const identityService = new IdentityService();
+    const userAuthService = new UserAuthService();
 
     function onSuccess(response: IJwtDTO): void {
         setLoggedIn(true);
@@ -43,7 +43,7 @@ export default function Login(): JSX.Element {
             />
             <Button<IJwtDTO>
                 title="Login"
-                onClickRequest={() => identityService.login(dto)}
+                onClickRequest={() => userAuthService.login(dto)}
                 onSuccess={onSuccess}
             />
         </form>
