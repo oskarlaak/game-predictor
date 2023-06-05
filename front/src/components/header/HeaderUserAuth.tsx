@@ -1,8 +1,13 @@
 import { useContext } from "react";
 import { LoggedInContext } from "../../App";
 import UserAuthService from "../../services/UserAuthService";
-import { removeJwt } from "../../helpers/jwtHelpers";
+import { getJwt, removeJwt } from "../../helpers/jwtHelpers";
 import ListLink from "../list/ListLink";
+import jwt_decode from "jwt-decode"
+
+type DecodedJwt = {
+    [key: string]: string;
+};
 
 export default function HeaderUserAuth(): JSX.Element {
     const {loggedIn, setLoggedIn} = useContext(LoggedInContext);
@@ -16,7 +21,12 @@ export default function HeaderUserAuth(): JSX.Element {
     }
 
     if (loggedIn) {
+        const decodedJwt = jwt_decode<DecodedJwt>(getJwt()!.token);
+
+        const username = decodedJwt["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+
         return <>
+            <ListLink to="/profile" text={username}/>
             <ListLink to="/" text="Logout" onClick={logout}/>
         </>;
     } else {

@@ -6,6 +6,7 @@ import Login from "./routes/Login";
 import Auth from "./Auth";
 import { createContext, useState } from "react";
 import { hasJwt } from "./helpers/jwtHelpers";
+import Profile from "./routes/Profile";
 
 interface ILoggedInContext {
     loggedIn: boolean;
@@ -24,6 +25,7 @@ export default function App(): JSX.Element {
 
             <Routes>
                 <Route index element={<Auth><Competitions/></Auth>}/>
+                <Route path="/profile" element={<Auth><Profile/></Auth>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/login" element={<Login/>}/>
             </Routes>
