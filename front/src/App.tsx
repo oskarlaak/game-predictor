@@ -6,7 +6,6 @@ import Login from "./routes/Login";
 import Auth from "./Auth";
 import { createContext, useState } from "react";
 import { hasJwt } from "./helpers/jwtHelpers";
-import "./App.css";
 
 interface ILoggedInContext {
     loggedIn: boolean;

@@ -33,7 +33,7 @@ export default abstract class BaseService {
         return response.data;
     }
 
-    protected async unauthoredPost<T>(url: string, data?: any): Promise<T | IErrorDTO | undefined> {
+    protected async unauthoredPost<T>(url: string, data?: unknown): Promise<T | IErrorDTO | undefined> {
         let response: AxiosResponse<T>;
         try {
             response = await this.axios.post<T>(
