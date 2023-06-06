@@ -2,14 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import UserAuthService from "../services/UserAuthService";
 import IJwtDTO from "../dto/user-auth/IJwtDTO";
-import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
 import IRegisterDTO from "../dto/user-auth/IRegisterDTO";
-import PasswordInputRegister from "../components/form/input/PasswordInputRegister";
-import PasswordConfirmInputRegister from "../components/form/input/PasswordConfirmInputRegister";
-import UsernameInput from "../components/form/input/UsernameInput";
 import { setJwt } from "../helpers/jwtHelpers";
 import { LoggedInContext } from "../App";
+import TextInput from "../components/form/input/TextInput";
 
 export default function Register(): JSX.Element {
 
@@ -28,24 +25,59 @@ export default function Register(): JSX.Element {
 
     function onSuccess(response: IJwtDTO): void {
         setLoggedIn(true);
-
         setJwt(response);
         navigate("/");
+    }
+
+    function usernameValidation(text: string): string {
+        return "";
+    }
+
+    function emailValidation(text: string): string {
+        return "";
+    }
+
+    function passwordValidation(text: string): string {
+        return "";
+    }
+
+    function confirmPasswordValidation(text: string): string {
+        return "";
     }
 
     return <>
         <h1>Register</h1>
         <form>
-            <UsernameInput
+            <TextInput
+                type="text"
+                name="username"
+                placeholder="Username"
+                autoComplete="username"
+                validation={usernameValidation}
                 setDto={setDto}
             />
-            <EmailInput
+            <TextInput
+                type="email"
+                name="email"
+                placeholder="Email"
+                autoComplete="email"
+                validation={emailValidation}
                 setDto={setDto}
             />
-            <PasswordInputRegister
+            <TextInput
+                type="password"
+                name="password"
+                placeholder="Password"
+                autoComplete="new-password"
+                validation={passwordValidation}
                 setDto={setDto}
             />
-            <PasswordConfirmInputRegister
+            <TextInput
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                autoComplete="new-password"
+                validation={confirmPasswordValidation}
                 setDto={setDto}
             />
             <Button<IJwtDTO>

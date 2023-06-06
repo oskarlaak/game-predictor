@@ -3,17 +3,16 @@ import { useState, useContext } from "react";
 import UserAuthService from "../services/UserAuthService";
 import ILoginDTO from "../dto/user-auth/ILoginDTO";
 import IJwtDTO from "../dto/user-auth/IJwtDTO";
-import EmailInput from "../components/form/input/EmailInput";
 import Button from "../components/form/Button";
-import PasswordInputLogin from "../components/form/input/PasswordInputLogin";
 import { setJwt } from "../helpers/jwtHelpers";
 import { LoggedInContext } from "../App";
+import TextInput from "../components/form/input/TextInput";
 
 export default function Login(): JSX.Element {
 
-    const {loggedIn, setLoggedIn} = useContext(LoggedInContext);
-
     const location = useLocation();
+
+    const {loggedIn, setLoggedIn} = useContext(LoggedInContext);
 
     const navigate = useNavigate();
 
@@ -26,19 +25,35 @@ export default function Login(): JSX.Element {
 
     function onSuccess(response: IJwtDTO): void {
         setLoggedIn(true);
-
         setJwt(response);
-
         navigate(location.state ?? "/");
+    }
+
+    function emailValidation(text: string): string {
+        return "";
+    }
+
+    function passwordValidation(text: string): string {
+        return "";
     }
 
     return <>
         <h1>Login</h1>
         <form>
-            <EmailInput
+            <TextInput
+                type="email"
+                name="email"
+                placeholder="Email"
+                autoComplete="email"
+                validation={emailValidation}
                 setDto={setDto}
             />
-            <PasswordInputLogin
+            <TextInput
+                type="password"
+                name="password"
+                placeholder="Password"
+                autoComplete="current-password"
+                validation={passwordValidation}
                 setDto={setDto}
             />
             <Button<IJwtDTO>
