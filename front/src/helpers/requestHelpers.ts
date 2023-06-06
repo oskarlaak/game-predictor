@@ -3,7 +3,7 @@ import IErrorDTO from "../dto/IErrorDTO";
 export async function handleRequest<T extends object>(
     request: () => Promise<T | IErrorDTO | undefined>,
     onError: (text: string) => void,
-    onSuccess: (previous: T) => void
+    onSuccess: (response: T) => void
 ): Promise<void> {
 
     const response = await request();
