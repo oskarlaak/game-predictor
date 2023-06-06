@@ -3,7 +3,8 @@ import { LoggedInContext } from "../../App";
 import UserAuthService from "../../services/UserAuthService";
 import { getJwt, removeJwt } from "../../helpers/jwtHelpers";
 import ListLink from "../list/ListLink";
-import jwt_decode from "jwt-decode"
+import jwt_decode from "jwt-decode";
+import IJwtDTO from "../../dto/user-auth/IJwtDTO";
 
 type DecodedJwt = {
     [key: string]: string;
@@ -21,7 +22,7 @@ export default function HeaderUserAuth(): JSX.Element {
     }
 
     if (loggedIn) {
-        const decodedJwt = jwt_decode<DecodedJwt>(getJwt()!.token);
+        const decodedJwt = jwt_decode<DecodedJwt>((getJwt() as IJwtDTO).token);
 
         const username = decodedJwt["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
 

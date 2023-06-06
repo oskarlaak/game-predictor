@@ -17,7 +17,7 @@ export default function TextInput<T>({type, name, placeholder, autoComplete, val
     const [message, setMessage] = useState<string>("");
     const [width, setWidth] = useState<number>(minWidth);
 
-    function trySetWidth(width: number) {
+    function trySetWidth(width: number): void {
         if (width < minWidth) {
             width = minWidth;
         }

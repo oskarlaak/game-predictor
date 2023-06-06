@@ -4,10 +4,10 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev":     "vite              --config config/vite.config.ts",
-        "build":   "tsc && vite build --config config/vite.config.ts",
-        "preview": "vite preview      --config config/vite.config.ts",
-        "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --config config/.eslintrc.cjs"
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
     },
     "dependencies": {
         "axios": "^1.4.0",
