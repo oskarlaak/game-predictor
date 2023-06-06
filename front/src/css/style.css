@@ -8,20 +8,33 @@ body {
     margin: 0;
 }
 
+header, header * {
+    display: flex;
+    align-items: center;
+}
 header {
     background-color: lightblue;
+    height: 64px;
+    padding: 0 24px;
 }
 
 nav {
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 0 24px
+    flex-grow: 1;
 }
-
+nav a {
+    color: black;
+}
+nav a:hover {
+    
+}
+nav > a {
+    font-size: xx-large;
+}
 nav > ul {
-    display: flex;
     list-style: none;
+    padding: 0;
+    margin: 0;
     gap: 24px
 }
 
