@@ -35,7 +35,7 @@ export default function FormWithButton<T extends object>({
                 </button>
                 <span className={message === "" ? "" : "invalid"}>
                     {message === ""
-                        ? loading ? "Processing" : <>&nbsp;</>
+                        ? loading ? "Loading" : <>&nbsp;</>
                         : message
                     }
                 </span>

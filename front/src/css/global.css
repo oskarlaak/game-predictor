@@ -1,0 +1,13 @@
+* {
+    font-family: monospace;
+    font-size: x-large;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+}
+
+h1 {
+    font-size: 48px;
+}

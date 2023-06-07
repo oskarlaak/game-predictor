@@ -1,0 +1,33 @@
+header, header * {
+    display: flex;
+    align-items: center;
+}
+header {
+    background-color: lightblue;
+    height: 64px;
+    padding: 0 24px;
+}
+
+nav {
+    justify-content: space-between;
+    flex-grow: 1;
+}
+nav a {
+    transition: text-decoration-color 0.2s;
+
+    color: black;
+    text-underline-offset: 2px;
+    text-decoration-color: transparent;
+}
+nav a:hover {
+    text-decoration-color: black;
+}
+nav > a {
+    font-size: xx-large;
+}
+nav > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 24px
+}
