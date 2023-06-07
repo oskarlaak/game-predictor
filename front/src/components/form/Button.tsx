@@ -12,7 +12,11 @@ export default function Button<T extends object>({title, onClickRequest, onSucce
 
     const [message, setMessage] = useState<string>("");
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     function onClick(): void {
+        setMessage("");
+        setLoading(true);
         handleRequest<T>(onClickRequest, setMessage, onSuccess);
     }
 
@@ -23,8 +27,11 @@ export default function Button<T extends object>({title, onClickRequest, onSucce
             >
                 {title}
             </button>
-            <span>
-                {message === "" ? <>&nbsp;</> : message}
+            <span className={message === "" ? "" : "invalid"}>
+                {message === ""
+                    ? loading ? "Processing" : <>&nbsp;</>
+                    : message
+                }
             </span>
         </div>
     </>;

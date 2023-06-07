@@ -98,5 +98,7 @@ button:hover {
 
 span {
     font-size: large;
+}
+span.invalid {
     color: red;
 }
