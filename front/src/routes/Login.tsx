@@ -1,25 +1,25 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useContext, useState} from "react";
 import UserAuthService from "../services/UserAuthService";
 import ILoginDTO from "../dto/user-auth/ILoginDTO";
 import IJwtDTO from "../dto/user-auth/IJwtDTO";
-import Button from "../components/form/Button";
 import { setJwt } from "../helpers/jwtHelpers";
 import { LoggedInContext } from "../App";
+import FormWithButton from "../components/form/FormWithButton";
 import TextInput from "../components/form/input/TextInput";
 
 export default function Login(): JSX.Element {
 
-    const location = useLocation();
-
     const {loggedIn, setLoggedIn} = useContext(LoggedInContext);
-
-    const navigate = useNavigate();
 
     const [dto, setDto] = useState<ILoginDTO>({
         email: "",
         password: ""
     });
+
+    const navigate = useNavigate();
+
+    const location = useLocation();
 
     const userAuthService = new UserAuthService();
 
@@ -29,38 +29,30 @@ export default function Login(): JSX.Element {
         navigate(location.state ?? "/");
     }
 
-    function emailValidation(text: string): string {
-        return "";
-    }
-
-    function passwordValidation(text: string): string {
-        return "";
-    }
-
     return <>
         <h1>Login</h1>
-        <form>
+        <FormWithButton
+            buttonTitle="Login"
+            onSubmitRequest={(x) => userAuthService.login(x)}
+            onSuccess={onSuccess}
+            dto={dto}
+        >
             <TextInput
+                title="Email"
                 type="email"
-                name="email"
-                placeholder="Email"
                 autoComplete="email"
-                validation={emailValidation}
+                name="email"
+                value={dto.email}
                 setDto={setDto}
             />
             <TextInput
+                title="Password"
                 type="password"
-                name="password"
-                placeholder="Password"
                 autoComplete="current-password"
-                validation={passwordValidation}
+                name="password"
+                value={dto.password}
                 setDto={setDto}
             />
-            <Button<IJwtDTO>
-                title="Login"
-                onClickRequest={() => userAuthService.login(dto)}
-                onSuccess={onSuccess}
-            />
-        </form>
+        </FormWithButton>
     </>;
 }

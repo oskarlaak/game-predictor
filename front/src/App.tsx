@@ -23,12 +23,14 @@ export default function App(): JSX.Element {
         <LoggedInContext.Provider value={{loggedIn, setLoggedIn}}>
             <Header/>
 
-            <Routes>
-                <Route index element={<Auth><Competitions/></Auth>}/>
-                <Route path="/profile" element={<Auth><Profile/></Auth>}/>
-                <Route path="/register" element={<Register/>}/>
-                <Route path="/login" element={<Login/>}/>
-            </Routes>
+            <main>
+                <Routes>
+                    <Route index element={<Auth><Competitions/></Auth>}/>
+                    <Route path="/profile" element={<Auth><Profile/></Auth>}/>
+                    <Route path="/register" element={<Register/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                </Routes>
+            </main>
         </LoggedInContext.Provider>
     </>;
 }

@@ -2,17 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import UserAuthService from "../services/UserAuthService";
 import IJwtDTO from "../dto/user-auth/IJwtDTO";
-import Button from "../components/form/Button";
 import IRegisterDTO from "../dto/user-auth/IRegisterDTO";
 import { setJwt } from "../helpers/jwtHelpers";
 import { LoggedInContext } from "../App";
 import TextInput from "../components/form/input/TextInput";
+import FormWithButton from "../components/form/FormWithButton";
 
 export default function Register(): JSX.Element {
 
     const {loggedIn, setLoggedIn} = useContext(LoggedInContext);
-
-    const navigate = useNavigate();
 
     const [dto, setDto] = useState<IRegisterDTO>({
         username: "",
@@ -20,6 +18,8 @@ export default function Register(): JSX.Element {
         password: "",
         confirmPassword: ""
     });
+
+    const navigate = useNavigate();
 
     const userAuthService = new UserAuthService();
 
@@ -29,62 +29,46 @@ export default function Register(): JSX.Element {
         navigate("/");
     }
 
-    function usernameValidation(text: string): string {
-        return "";
-    }
-
-    function emailValidation(text: string): string {
-        return "";
-    }
-
-    function passwordValidation(text: string): string {
-        return "";
-    }
-
-    function confirmPasswordValidation(text: string): string {
-        return "";
-    }
-
     return <>
         <h1>Register</h1>
-        <form>
+        <FormWithButton
+            buttonTitle="Register"
+            onSubmitRequest={(x) => userAuthService.register(x)}
+            onSuccess={onSuccess}
+            dto={dto}
+        >
             <TextInput
+                title="Username"
                 type="text"
-                name="username"
-                placeholder="Username"
                 autoComplete="username"
-                validation={usernameValidation}
+                name="username"
+                value={dto.username}
                 setDto={setDto}
             />
             <TextInput
+                title="Email"
                 type="email"
-                name="email"
-                placeholder="Email"
                 autoComplete="email"
-                validation={emailValidation}
+                name="email"
+                value={dto.email}
                 setDto={setDto}
             />
             <TextInput
+                title="Password"
                 type="password"
+                autoComplete="new-password"
                 name="password"
-                placeholder="Password"
-                autoComplete="new-password"
-                validation={passwordValidation}
+                value={dto.password}
                 setDto={setDto}
             />
             <TextInput
+                title="Confirm Password"
                 type="password"
-                name="confirmPassword"
-                placeholder="Confirm Password"
                 autoComplete="new-password"
-                validation={confirmPasswordValidation}
+                name="confirmPassword"
+                value={dto.confirmPassword}
                 setDto={setDto}
             />
-            <Button<IJwtDTO>
-                title="Register"
-                onClickRequest={() => userAuthService.register(dto)}
-                onSuccess={onSuccess}
-            />
-        </form>
+        </FormWithButton>
     </>;
 }

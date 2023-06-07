@@ -2,7 +2,7 @@ import { useState } from "react";
 import IErrorDTO from "../../dto/IErrorDTO";
 import { handleRequest } from "../../helpers/requestHelpers";
 
-type Props<T extends object> = {
+type Props<T> = {
     title: string;
     onClickRequest: () => Promise<T | IErrorDTO | undefined>;
     onSuccess: (response: T) => void;
@@ -12,16 +12,19 @@ export default function Button<T extends object>({title, onClickRequest, onSucce
 
     const [message, setMessage] = useState<string>("");
 
+    function onClick(): void {
+        handleRequest<T>(onClickRequest, setMessage, onSuccess);
+    }
+
     return <>
-        <div>
-            <button onClick={e => {
-                e.preventDefault();
-                handleRequest<T>(onClickRequest, setMessage, onSuccess);
-            }}>
+        <div className="form-row">
+            <button
+                onClick={e => {e.preventDefault(); onClick();}}
+            >
                 {title}
             </button>
-            <span className="invalid">
-                {message !== "" ? message : <>&nbsp;</>}
+            <span>
+                {message === "" ? <>&nbsp;</> : message}
             </span>
         </div>
     </>;

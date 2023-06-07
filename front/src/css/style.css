@@ -52,14 +52,18 @@ form, form * {
     align-items: center;
 }
 
+.form-row {
+    margin: 8px;
+}
+
+label {
+    font-size: large;
+}
+
 input {
     transition: border-color 0.3s;
 
     background-color: transparent;
-    border: none;
-    border-bottom: 2px solid;
-    border-radius: 4px 4px 0 0;
-
     border-color: lightgray;
 }
 input:hover {
@@ -67,14 +71,32 @@ input:hover {
 }
 input:focus {
     outline: none;
-
     border-color: black;
 }
-input.invalid {
-    border-color: red;
+
+input, button {
+    padding: 2px 8px;
+    border-style: solid;
+    border-radius: 12px;
 }
 
-span.invalid {
-    font-size:large;
+button {
+    transition: text-decoration-color 0.2s;
+
+    color: white;
+    background-color: royalblue;
+    border-color: royalblue;
+
+    text-underline-offset: 2px;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+}
+button:hover {
+    cursor: pointer;
+    text-decoration-color: white;
+}
+
+span {
+    font-size: large;
     color: red;
 }
