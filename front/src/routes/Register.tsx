@@ -33,9 +33,8 @@ export default function Register(): JSX.Element {
         <h1>Register</h1>
         <FormWithButton
             buttonTitle="Register"
-            onSubmitRequest={(x) => userAuthService.register(x)}
+            onSubmitRequest={() => userAuthService.register(dto)}
             onSuccess={onSuccess}
-            dto={dto}
         >
             <TextInput
                 title="Username"

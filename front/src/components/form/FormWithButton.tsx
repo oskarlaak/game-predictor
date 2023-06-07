@@ -1,29 +1,45 @@
+import { useState } from "react";
 import IErrorDTO from "../../dto/IErrorDTO";
-import Button from "./Button";
+import { handleRequest } from "../../helpers/requestHelpers";
 
-type Props<TDto, TResponse> = {
+type Props<T> = {
     buttonTitle: string;
-    onSubmitRequest: (dto: TDto) => Promise<TResponse | IErrorDTO | undefined>;
-    onSuccess: (response: TResponse) => void;
-    dto: TDto;
+    onSubmitRequest: () => Promise<T | IErrorDTO | undefined>;
+    onSuccess: (response: T) => void;
     children: JSX.Element | JSX.Element[];
 };
 
-export default function FormWithButton<TDto, TResponse extends object>({
+export default function FormWithButton<T extends object>({
     buttonTitle,
     onSubmitRequest,
     onSuccess,
-    dto,
     children
-}: Props<TDto, TResponse>): JSX.Element {
+}: Props<T>): JSX.Element {
+
+    const [message, setMessage] = useState<string>("");
+
+    const [loading, setLoading] = useState<boolean>(false);
+
+    function onSubmit(): void {
+        setMessage("");
+        setLoading(true);
+        handleRequest<T>(onSubmitRequest, setMessage, onSuccess);
+    }
+
     return <>
-        <form>
+        <form onSubmit={e => {e.preventDefault(); onSubmit();}}>
             {children}
-            <Button
-                title={buttonTitle}
-                onClickRequest={() => onSubmitRequest(dto)}
-                onSuccess={onSuccess}
-            />
+            <div className="form-row">
+                <button>
+                    {buttonTitle}
+                </button>
+                <span className={message === "" ? "" : "invalid"}>
+                    {message === ""
+                        ? loading ? "Processing" : <>&nbsp;</>
+                        : message
+                    }
+                </span>
+            </div>
         </form>
     </>;
 }

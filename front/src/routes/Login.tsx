@@ -33,9 +33,8 @@ export default function Login(): JSX.Element {
         <h1>Login</h1>
         <FormWithButton
             buttonTitle="Login"
-            onSubmitRequest={(x) => userAuthService.login(x)}
+            onSubmitRequest={() => userAuthService.login(dto)}
             onSuccess={onSuccess}
-            dto={dto}
         >
             <TextInput
                 title="Email"
