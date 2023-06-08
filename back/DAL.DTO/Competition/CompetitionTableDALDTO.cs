@@ -5,6 +5,7 @@ namespace DAL.DTO.Competition;
 
 public class CompetitionTableDALDTO
 {
+    public Guid Id { get; set; }
     public string Name { get; set; } = default!;
     public bool HasEnded { get; set; }
     public bool UserIsHost { get; set; }

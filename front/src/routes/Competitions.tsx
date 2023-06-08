@@ -1,4 +1,4 @@
-import CompetitionList from "../components/competition/CompetitionList";
+import CompetitionList from "../components/competition-list/CompetitionList";
 import ICompetitionDTO from "../dto/competition/ICompetitionDTO";
 import { handleRequest } from "../helpers/requestHelpers";
 import CompetitionService from "../services/CompetitionService";

@@ -57,6 +57,7 @@ public class CompetitionRepo : AppBaseRepo<Competition>, ICompetitionRepo
             .Where(c => c.Id == id)
             .Select(c => new CompetitionTableDALDTO()
             {
+                Id = c.Id,
                 Name = c.Name,
                 HasEnded = c.HasEnded,
                 UserIsHost = c.CompetitionUsers!.First(cu => cu.UserId == userId).IsHost,

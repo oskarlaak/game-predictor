@@ -38,6 +38,7 @@ public class CompetitionMapper
         
         return new CompetitionTableDTO()
         {
+            Id = dto.Id,
             Name = dto.Name,
             HasEnded = dto.HasEnded,
             UserIsHost = dto.UserIsHost,

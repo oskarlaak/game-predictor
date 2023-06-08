@@ -5,6 +5,7 @@ namespace Public.DTO.Competition;
 
 public class CompetitionTableDTO
 {
+    public Guid Id { get; set; }
     public string Name { get; set; } = default!;
     public bool HasEnded { get; set; }
     public bool UserIsHost { get; set; }
